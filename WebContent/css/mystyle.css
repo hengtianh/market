@@ -1,0 +1,131 @@
+.welcome{
+    border-bottom:1px solid lightgray;
+    height: 30px;
+    line-height: 30px;
+    padding-left:0;
+}
+.market{
+    height: 70px;
+    line-height: 70px;
+    font-size:32px;
+    font-weight:bold;
+    font-family: "Yu Gothic UI Semibold";
+    padding-left: 0;
+}
+
+
+
+.main-left{
+    float: left;
+    margin:10px 0 0 20px;
+}
+.main-left p{
+    width:180px;
+    height:40px;
+    line-height: 40px;
+    padding-left:20px;
+    font-size: 18px;
+    font-family: "Courier New";
+    font-weight: inherit;
+    color: white;
+    border:0;
+    background-color: #323a45;
+    margin-top: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: block;
+}
+.nav1{
+    width:200px;
+    background-color: white;
+    display: none;
+    text-align: center;
+}
+.nav1 ul{
+    padding-left: 10px;
+}
+.nav1 ul li{
+    width:160px;
+    font-size: 14px;
+    height:20px;
+    line-height:20px;
+    text-align: center;
+    list-style-type: none;
+    /*border-bottom: 1px solid black;*/
+    /*text-align: -webkit-match-parent;*/
+}
+.hr{
+    width:160px;
+    margin:5px 0 5px 0;
+    height:1px;
+    border-bottom: 2px solid #ecf0f1;
+}
+.nav1 ul li a:link{
+    color:black;
+    text-decoration: none;
+
+}
+.nav1 ul li a:hover{
+    color:#e74c3c;
+}
+
+/*右部*/
+.main-right{
+    float: right;
+    width:900px;
+    height:1000px;
+
+}
+.detail{
+    width:270px;
+    height:410px;
+    margin:15px 25px 0 0;
+    background-color: white;
+    float: left;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 15px  gray;
+    -moz-box-shadow: 0 15px  gray;
+    box-shadow: 1px 2px 0 2px  ghostwhite;
+}
+.detail-img{
+    width:250px;
+    height:250px;
+    margin:0 auto;
+    padding: 10px 10px 5px 10px;
+}
+.detail-img img{
+    width:250px;
+    height:250px;
+    border-radius:5px;
+}
+.detail-right{
+    padding:10px 0 5px 10px;
+    margin:0 auto;
+}
+.detail-desc{
+    text-align: center;
+    height:50px;
+}
+.detail-info p{
+    text-align: center;
+    padding:2px 0 2px 0;
+}
+.detail-info button{
+    width: 120px;
+    height: 35px;
+    background-color: #e74c3c;
+    border-radius:5px;
+    color:white;
+    cursor: pointer;
+}
+
+.foot_p{
+	margin-left:15px;
+	padding-top:5px;
+	color:white;
+}
+
+.foot_bg{
+	background-color:black;
+}
+

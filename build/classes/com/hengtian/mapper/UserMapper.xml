@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hengtian.mapper.UserMapper">
+	<select id="findUserToLogin" parameterType="com.hengtian.po.User" resultType="com.hengtian.po.User">
+		SELECT * FROM users WHERE email=#{email} AND pwd=#{pwd}
+	</select>
+	
+	<select id="findUserByEmail" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT email FROM users WHERE email=#{email}
+	</select>
+		
+	<insert id="insertUser" parameterType="com.hengtian.po.User">
+		INSERT INTO users(email,pwd,gender,realName,phone,address,actived) VALUES(#{email},#{pwd},#{gender},#{realName},#{phone},#{address},0)
+	</insert>
+	
+	<update id="updateUserActived" parameterType="java.lang.String">
+		UPDATE users SET actived=1 WHERE email=#{email}
+	</update>
+	
+	<update id="updateUser" parameterType="com.hengtian.po.User">
+		UPDATE users SET realName=#{realName},phone=#{phone},address=#{address} WHERE id=#{id}
+	</update>
+</mapper>
