@@ -10,8 +10,8 @@
 	<title>Bootstrap 101 Template</title>
 
 	<!-- Bootstrap -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/mystyle.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet">
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,13 +30,12 @@
 		<!--<h1>Hello, world!</h1>-->
 		<div class="row">
 			<div class="col-md-6">
-				<img src="image/6.jpg" width="500" height="300" class="img-rounded">
+				<img src="/path/upload/${pd.img}" width="500" height="300" class="img-rounded">
 			</div>
 			<div class="col-md-6">
-				<p>This is a simple hero unit, a simple jumbotron-style component for calling
-					extra attention to featured content or information.</p>
-				<p>库存：1000</p>
-				<p>单价：50</p>
+				<p>${pd.pro_desc}</p>
+				<p>库存：${pd.num}</p>
+				<p>单价：${pd.price}</p>
 				<p>评论：
 					<ul>
 						<li>可以</li>
@@ -47,7 +46,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<p style="margin-top: 10px;">数量：<input style="width: 100px;height: 30px;" type="number" min="1" /></p>
+				<p style="margin-top: 10px;">数量：<input style="width: 100px;height: 30px;" type="number" min="1" value="1" /></p>
 				<p><a class="btn btn-primary btn-lg" href="#" role="button">立即购买</a></p>
 			</div>
 		</div>
@@ -59,8 +58,8 @@
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-3.1.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

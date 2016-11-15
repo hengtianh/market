@@ -1,7 +1,5 @@
 package com.hengtian.web;
 
-import java.net.URLEncoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -50,7 +48,7 @@ public class UserHandler {
 			//request.setAttribute("errorUser", message);
 			throw new UserException(message);
 		}
-		return "index";
+		return "redirect:category/toIndex.action";
 	}
 	
 	
@@ -79,7 +77,7 @@ public class UserHandler {
 	public String regist(User user, Model model) throws Exception {
 		uService.insertUser(user);
 		model.addAttribute("info", "注册成功！激活邮件已发送，请注意查收！");
-		return "info";
+		return "jsp/info";
 	}
 	
 	/**
@@ -95,7 +93,7 @@ public class UserHandler {
 		session.removeAttribute("user");
 		//重新设置session
 		session.setAttribute("user", user);
-		return "index";
+		return "redirect:category/toIndex.action";
 	}
 	
 	/**
@@ -104,8 +102,9 @@ public class UserHandler {
 	 * @return true 激活成功
 	 */
 	@RequestMapping("/active")
-	public void activeAccount(String email) throws Exception {
+	public String activeAccount(String email) throws Exception {
 		uService.updateUserActived(email);
+		return "jsp/index";
 	}
 	
 	/**
@@ -118,7 +117,7 @@ public class UserHandler {
 		if(session.getAttribute("user")!=null){
 			session.removeAttribute("user");
 		}
-		return "index";
+		return "redirect:category/toIndex.action";
 	}
 	
 	/**
@@ -137,7 +136,7 @@ public class UserHandler {
 			model.addAttribute("message", "邮件发送失败，请重试");
 			throw ex;
 		}
-		return null;
+		return "redirect:category/toIndex.action";
 	}
 	
 	/**
@@ -146,7 +145,7 @@ public class UserHandler {
 	 */
 	@RequestMapping("/home")
 	public String toHome() {
-		return "index";
+		return "redirect:category/toIndex.action";
 	}
 	
 	/**
@@ -155,6 +154,6 @@ public class UserHandler {
 	 */
 	@RequestMapping("/setting")
 	public String toSetting() {
-		return "setting";
+		return "jsp/sel/setting";
 	}
 }

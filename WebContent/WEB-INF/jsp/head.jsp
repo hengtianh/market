@@ -22,7 +22,7 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="${pageContext.request.contextPath}/users/home.action">首页<span
+				<li class="active"><a href="${pageContext.request.contextPath}/category/toIndex.action">首页<span
 						class="sr-only">(current)</span></a></li>
 				<li><a href="#">Link</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -30,8 +30,8 @@
 					aria-expanded="false">卖家 <span class="glyphicon glyphicon-gift"
 						aria-hidden="true"></span><span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">在售</a></li>
-						<li><a href="#">上架货物</a></li>
+						<li><a href="${pageContext.request.contextPath}/category/showMyProducts.action?userid=${sessionScope.user.id}">在售</a></li>
+						<li><a href="${pageContext.request.contextPath}/category/toAddProduct.action">上架货物</a></li>
 						<li><a href="#">我的订单</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="#">Separated link</a></li>

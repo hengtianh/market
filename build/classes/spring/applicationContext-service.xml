@@ -18,6 +18,9 @@
 <bean id="uService" class="com.hengtian.service.impl.UserServiceImpl">
 	<property name="mailUtil" ref="mailUtil"></property>
 </bean>
+
+<bean id="cService" class="com.hengtian.service.impl.CategoryServiceImpl">
+</bean>
 		
 		
 </beans>

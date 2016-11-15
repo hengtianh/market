@@ -40,10 +40,39 @@
 
 <!-- viewResolve视图解析器 -->
 <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/WEB-INF/" />
         <property name="suffix" value=".jsp"/>
 </bean>
 
+<!-- handler adapter -->
+<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+    <property name="messageConverters">
+        <list>
+        	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+        </list>
+    </property>
+</bean>
+
+<!-- 配置文件上传解析器 -->
+<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- one of the properties available; the maximum file size in bytes -->
+    <property name="maxUploadSize" value="1000000"/>
+</bean>
+
+<!-- 配置拦截器 -->
+<!-- <mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/**" />
+        <bean class="com.hengtian.interceptor.LoginInterceptor" />
+    </mvc:interceptor>
+    <mvc:interceptor>
+        <mvc:mapping path="/*" />
+        <bean class="com.hengtian.interceptor.CommonInterceptor" />
+    </mvc:interceptor>
+</mvc:interceptors> -->
+
+<!-- 配置异常处理器 -->
 <bean class="com.hengtian.exceptions.MyExceptionResolver"/>
 
 </beans>

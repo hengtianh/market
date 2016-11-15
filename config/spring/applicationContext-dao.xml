@@ -22,19 +22,45 @@
 		<property name="basePackage" value="com.hengtian.mapper"></property>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
+	
+	<!-- 配置mail.properties -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:mail.properties</value>
+		</property>
+	</bean>
 
 	<!-- 配置javamail -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.163.com" />
+		<property name="host">
+			<value>smtp.163.com</value>
+		</property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.timeout">25000</prop>
+			</props>
+		</property>
+		<property name="username">
+			<value>tianhengyanzheng@163.com</value>
+		</property>
+		<property name="password">
+			<value>wangyiyouxiang</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
 	</bean>
-	<!-- this is a template message that we can pre-load with default state -->
-	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-		<property name="from" value="tianhengyanzheng@163.com" />
+	
+	<!-- this is a template message that we can pre-load with default state 
+	<bean id="templateMessage" class="org.springframework.mail.MimeMessage">
+		<property name="from" value="tianhengyanzheng@163.com"/>
 		<property name="subject" value="Active Account" />
-	</bean>
+	</bean> -->
+	
 	<bean id="mailUtil" class="com.hengtian.utils.MailUtil">
 		<property name="mailSender" ref="mailSender" />
-		<property name="templateMessage" ref="templateMessage" />
+<!-- 		<property name="templateMessage" ref="templateMessage" /> -->
 	</bean>
 
 
