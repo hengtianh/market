@@ -1,4 +1,4 @@
-﻿
+﻿<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="welcome">welcome to the market!</div>
 <div class="market">
 	<p>Market Online!</p>
@@ -31,10 +31,11 @@
 						aria-hidden="true"></span><span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/category/showMyProducts.action?userid=${sessionScope.user.id}">在售</a></li>
-						<li><a href="${pageContext.request.contextPath}/category/toAddProduct.action">上架货物</a></li>
-						<li><a href="#">我的订单</a></li>
+						<li><a href="${pageContext.request.contextPath}/category/product/toAddProduct.action">上架货物</a></li>
+						<li><a href="${pageContext.request.contextPath}/order/findMyOrderDetail.action">待发货订单</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Separated link</a></li>
+						<li><a href="#">我的宝贝</a></li>
+						<li><a href="#">待发货</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="#">One more separated link</a></li>
 					</ul></li>
@@ -205,23 +206,23 @@
 				<h4 class="modal-title" id="myModalLabel">Shopping Cart</h4>
 			</div>
 			<div class="modal-body">
+			<c:if test="${cart == null or cart.cartItems.size()<=0}">
+				购物车空空如也!
+			</c:if>
+			<c:forEach items="${cart.cartItems}" var="cart">
 				<div class="media">
 					<div class="media-left">
-						<a href="#"> <img class="media-object" src="image/6.jpg" width="64" height="64" alt="...">
-						</a>
-					</div>
-					<div class="media-body">
-						<h4 class="media-heading">Media heading</h4>
-						<p>描述信息</p>
-						<input type="number" value="1">　件
-						单价：20元
-						<a href="#" class="btn btn-danger">删除该项</a>
+						<span>${cart.info}</span>
+						<input type="number" value="${cart.num}">　件
+						单价：${cart.price}元
+						<a href="${pageContext.request.contextPath}/order/removeItem.action?id=${cart.id}&price=${cart.price}" class="btn btn-danger">删除该项</a>
 					</div>
 				</div>
+			</c:forEach>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" data-dismiss="modal">结算</button>
-				<button type="button" class="btn btn-danger">清空购物车</button>
+				<a href="${pageContext.request.contextPath}/order/createOrder.action" class="btn btn-success">结算</a>
+				<a href="${pageContext.request.contextPath}/order/removeCart.action" class="btn btn-danger">清空购物车</a>
 			</div>
 		</div>
 	</div>

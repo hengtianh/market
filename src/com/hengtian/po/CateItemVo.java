@@ -1,8 +1,9 @@
 package com.hengtian.po;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CateItemVo {
+public class CateItemVo implements Serializable{
 
 	private String cate_name;
 	private List<CateItem> cateItems;

@@ -5,6 +5,7 @@ import java.util.List;
 import com.hengtian.po.CateItem;
 import com.hengtian.po.CateItemVo;
 import com.hengtian.po.Product;
+import com.hengtian.utils.PageResult;
 
 public interface CategoryService {
 	
@@ -19,4 +20,8 @@ public interface CategoryService {
 	public Product findProductById(String pro_id) throws Exception;
 	
 	public List<Product> findProductByUserId(Integer userid) throws Exception;
+	
+	public List<Product> findProductLimit(PageResult pageResult) throws Exception;
+	
+	public int findProductCount(PageResult pr) throws Exception;
 }

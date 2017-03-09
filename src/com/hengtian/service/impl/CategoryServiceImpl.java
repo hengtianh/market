@@ -9,6 +9,7 @@ import com.hengtian.po.CateItem;
 import com.hengtian.po.CateItemVo;
 import com.hengtian.po.Product;
 import com.hengtian.service.CategoryService;
+import com.hengtian.utils.PageResult;
 
 public class CategoryServiceImpl implements CategoryService {
 	
@@ -51,6 +52,24 @@ public class CategoryServiceImpl implements CategoryService {
 		//根据用户id查询其所有的商品
 		List<Product> lists = categoryMapper.findProductByUserId(userid);
 		return lists;
+	}
+
+	/**
+	 * 查询分页信息
+	 */
+	@Override
+	public List<Product> findProductLimit(PageResult pageResult) throws Exception {
+		List<Product> lists = categoryMapper.findProductLimit(pageResult);
+		return lists;
+	}
+
+	/**
+	 * 查询总记录数
+	 */
+	@Override
+	public int findProductCount(PageResult pr) throws Exception {
+		int pageCount = categoryMapper.findProductCount(pr);
+		return pageCount;
 	}
 
 }

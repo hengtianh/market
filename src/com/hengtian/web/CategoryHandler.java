@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import com.hengtian.po.CateItemVo;
 import com.hengtian.po.Product;
 import com.hengtian.service.CategoryService;
 import com.hengtian.utils.IDGenerater;
+import com.hengtian.utils.PageResult;
 
 @Controller
 @RequestMapping("/category")
@@ -40,7 +43,7 @@ public class CategoryHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/toAddProduct")
+	@RequestMapping("/product/toAddProduct")
 	public String toAddProduct(Model model) throws Exception {
 		//加载类别信息
 		List<CateItem> lists = cService.findAllItems();
@@ -55,12 +58,12 @@ public class CategoryHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/addProduct")
+	@RequestMapping("/product/addProduct")
 	public String addProduct(Product product, MultipartFile proImg) throws Exception {
 		//添加商品
 		//处理上传的图片
 		//文件的保存路径
-		String filePath = "F:\\workspace\\develop\\upload\\"; 
+		String filePath = "E:\\workspace\\develop\\upload\\"; 
 		//文件的名称
 		String fileName = proImg.getOriginalFilename();
 		//新的图片名称
@@ -73,7 +76,7 @@ public class CategoryHandler {
 		product.setImg(newFileName);
 		product.setPro_id(IDGenerater.generatProId());
 		cService.insertProduct(product);
-		return "redirect:category/toIndex.action";
+		return "redirect:/category/toIndex.action";
 	}
 	
 	/**
@@ -83,11 +86,17 @@ public class CategoryHandler {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toIndex")
-	public String toIndex(Model model) throws Exception {
-		//加载所有的商品信息，转向首页
-		List<Product> lists = cService.findAllProduct();
-		model.addAttribute("products",lists);
-		return "redirect:category/toIndex.action";
+	public String toIndex(Model model, HttpServletRequest request, PageResult pr) throws Exception {
+		//封装分页查询所需的数据
+		PageResult pageResult = null;
+		int recordCount = cService.findProductCount(pr);
+		pageResult = new PageResult(recordCount,1);
+		pageResult.setType(pr.getType());
+		List<Product> pageLimit = cService.findProductLimit(pageResult);
+		model.addAttribute("products", pageLimit);
+		//分页的导航数据
+		request.setAttribute("pageOrder", pageResult);
+		return "jsp/index";
 	}
 	
 	/**

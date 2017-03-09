@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hengtian.mapper.OrderMapper">
+
+<insert id="insertOrderDetail" parameterType="com.hengtian.po.OrderDetail">	
+		INSERT INTO 
+		orderdetails(oid,pname,pid,price,num) 
+		VALUES(#{oid},#{pName},#{pId},#{price},#{num})
+	</insert>
+	
+	<insert id="insertOrder" parameterType="com.hengtian.po.Order">	
+		insert into 
+		orders(orderid,price,customName,address,phone,cuDate,success) 
+		values(#{orderid},#{price},#{customName},#{address},#{phone},#{cuDate},#{success})
+	</insert>
+	
+	<select id="findOrder" parameterType="string" resultType="com.hengtian.po.Order">	
+		SELECT o.orderid,o.price,o.customName,o.address,o.phone,o.cuDate 
+		FROM orders o 
+		WHERE o.orderid = #{oid}
+	</select>
+	
+	<select id="findAllOrderItems" parameterType="string" resultType="com.hengtian.po.OrderDetail">
+		SELECT pname,pid,price,num 
+		FROM orderdetails 
+		WHERE oid = #{oid};
+	</select>
+	
+	<!-- 我的订单 -->
+	<select id="findMyOrderDetail" parameterType="string" resultType="com.hengtian.po.OrderDetail">
+		SELECT od.oid , od.pname , od.price , od.num 
+		FROM orderdetails od , orders o 
+		WHERE od.oid = o.orderid AND o.customName = #{customName} AND o.success = 0 AND od.success = 0
+	</select>
+	
+	<!-- 代发货订单 -->
+	<select id="findOrderDetailSell" parameterType="int" resultType="com.hengtian.po.OrderDetail">
+		SELECT od.id , od.oid , od.pname , od.price , od.num 
+		FROM orderdetails od , products p , orders o
+		WHERE od.pid = p.pro_id 
+		AND p.userid = #{userid} 
+		AND od.success = 0
+		AND od.oid = o.orderid
+		AND o.success = 1
+	</select>
+	
+	<update id="updateOrder" parameterType="int">
+		UPDATE orderdetails SET success = 1 WHERE id = #{id}
+	</update>
+	
+	<select id="successOrderList" parameterType="int" resultType="com.hengtian.po.OrderDetail">
+		select od.id , od.oid , od.pname , od.price , od.num 
+		from orderdetails od , products p 
+		where od.pid = p.pro_id and p.userid = #{userid} AND od.success = 1
+	</select>
+	
+	<update id="updateOrderStatus" parameterType="com.hengtian.po.Order">
+		UPDATE ORDER o SET o.success = 1 WHERE o.orderid = #{orderid} 
+	</update>
+</mapper>

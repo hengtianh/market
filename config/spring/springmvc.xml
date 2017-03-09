@@ -61,16 +61,17 @@
 </bean>
 
 <!-- 配置拦截器 -->
-<!-- <mvc:interceptors>
+ <mvc:interceptors>
     <mvc:interceptor>
-        <mvc:mapping path="/**" />
+        <mvc:mapping path="/category/product/**" />
+        <mvc:mapping path="/order/**" />
         <bean class="com.hengtian.interceptor.LoginInterceptor" />
     </mvc:interceptor>
-    <mvc:interceptor>
-        <mvc:mapping path="/*" />
+    <!-- <mvc:interceptor>
+        <mvc:mapping path="/category/toIndex" />
         <bean class="com.hengtian.interceptor.CommonInterceptor" />
-    </mvc:interceptor>
-</mvc:interceptors> -->
+    </mvc:interceptor> -->
+</mvc:interceptors> 
 
 <!-- 配置异常处理器 -->
 <bean class="com.hengtian.exceptions.MyExceptionResolver"/>

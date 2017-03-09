@@ -21,6 +21,9 @@
 
 <bean id="cService" class="com.hengtian.service.impl.CategoryServiceImpl">
 </bean>
+
+<bean id="oService" class="com.hengtian.service.impl.OrderServiceImpl">
+</bean>
 		
 		
 </beans>

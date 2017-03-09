@@ -23,46 +23,7 @@
 		<div class="col-md-2">
 			<div class="main-left">
 				<div class="main-nav">
-				<!-- 
-					<p id="btn1" onmouseover="showNav($('#nav1'))">电子产品</p>
-					<div id="nav1" class="nav1">
-						<ul>
-							<li><a href="#">二手电脑</a></li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-						</ul>
-					</div> 
-					<p id="btn2" onmouseover="navshow($('#nav2'))">床上用品</p>
-					<div id="nav2" class="nav1">
-						<ul>
-							<li><a href="#">二手电脑</a></li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-						</ul>
-					</div>
-					<p id="btn3" onmouseover="navshow($('#nav3'))">居家出行</p>
-					<div id="nav3" class="nav1">
-						<ul>
-							<li><a href="#">二手电脑</a></li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-							<li><a href="#">二手电脑</a> </li>
-							<div class="hr"></div>
-						</ul>
-					</div>  -->
+		
 				</div>
 			</div>
 		</div>
@@ -71,58 +32,52 @@
 			<div class="row">
 			
 			<c:forEach items="${products}" var="p">
-			   <div class="col-md-4">
+			<form action="${pageContext.request.contextPath}/order/addCart.action" method="post">
+			<input type="hidden" name="id" value="${p.pro_id}" />
+			<input type="hidden" name="info" value="${p.pro_name}" />
+			<input type="hidden" name="price" value="${p.price}" />
+			<div class="col-md-4">
 					<div class="thumbnail">
 						<a href="${pageContext.request.contextPath}/category/showDetail.action?pro_id=${p.pro_id}"><img src="/path/upload/${p.img}" alt="..." width="168" height="198"></a>
 						<div class="caption">
 							<h3>${p.pro_name}</h3>
 							<p>${p.pro_desc}</p>
-							<p><a href="#" class="btn btn-primary" role="button">加入购物车</a> <a href="${pageContext.request.contextPath}/category/showDetail.action?pro_id=${p.pro_id}" class="btn btn-default" role="button">查看信息</a></p>
+							<p><input type="submit" class="btn btn-primary" role="button" value="加入购物车"> <a href="${pageContext.request.contextPath}/category/showDetail.action?pro_id=${p.pro_id}" class="btn btn-default" role="button">查看信息</a></p>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
+			</form>
 				
-
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img src="${pageContext.request.contextPath}/image/6.jpg" alt="..." width="168" height="168">
-						<div class="caption">
-							<h3>Thumbnail label</h3>
-							<p>...</p>
-							<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img src="${pageContext.request.contextPath}/image/6.jpg" alt="..." width="168" height="168">
-						<div class="caption">
-							<h3>Thumbnail label</h3>
-							<p>...</p>
-							<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img src="${pageContext.request.contextPath}/image/6.jpg" alt="..." width="168" height="168">
-						<div class="caption">
-							<h3>Thumbnail label</h3>
-							<p>...</p>
-							<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-						</div>
-					</div>
-				</div> 
-
+			<!-- 分页的导航条 -->
+			</div>
+			<div class="container row">
+			<div class="col-md-offset-2 col-md-6">
+			<nav>
+			  <ul class="pagination">
+			    <li>
+			      <a href="${pageContext.request.contextPath}/page/getPage.action?pageIndex=${pageOrder.pages[0]<=1?1:pageOrder.pages[0]-1}&type=${pageOrder.type}" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <c:forEach var="page" items="${pageOrder.pages}">
+			    	<li><a href="${pageContext.request.contextPath}/page/getPage.action?pageIndex=${page}&type=${pageOrder.type}">${page}</a></li>
+			    </c:forEach>
+			    <!-- 下一页 -->
+			    <%-- <c:if test=""> --%>
+			    <li>
+			      <a href="${pageContext.request.contextPath}/page/getPage.action?pageIndex=${pageOrder.pages[pageOrder.size-1]>=pageOrder.pageCount?pageOrder.pageCount:pageOrder.pages[pageOrder.size-1]+1}&type=${pageOrder.type}" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			    <%-- </c:if> --%>
+			  </ul>
+			</nav>
+			</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 
 <!-- foot页面 -->
 <jsp:include page="/WEB-INF/jsp/foot.jsp"></jsp:include>

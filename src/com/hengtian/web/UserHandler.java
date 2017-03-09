@@ -36,19 +36,14 @@ public class UserHandler {
 		try{
 			user = uService.findUserToLogin(u,checkme);
 			session.setAttribute("user", user);
-			//request.getRequestDispatcher("index").forward(request, response);
 		}catch(UserException ex){
 			request.setAttribute("loginUser", u);
 			throw ex;
 		}catch(Exception e){
 			String message = "用户名或密码错误";
-//			response.setContentType("text/html;charset=utf-8");
-//			response.setCharacterEncoding("utf-8");
-//			response.getWriter().print(message);
-			//request.setAttribute("errorUser", message);
 			throw new UserException(message);
 		}
-		return "redirect:category/toIndex.action";
+		return "redirect:/category/toIndex.action";
 	}
 	
 	
@@ -117,7 +112,7 @@ public class UserHandler {
 		if(session.getAttribute("user")!=null){
 			session.removeAttribute("user");
 		}
-		return "redirect:category/toIndex.action";
+		return "redirect:/category/toIndex.action";
 	}
 	
 	/**

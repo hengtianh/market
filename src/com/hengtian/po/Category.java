@@ -1,6 +1,8 @@
 package com.hengtian.po;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
 	private Integer id;
 	private String cate_id;
 	private String cate_name;

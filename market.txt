@@ -1,0 +1,65 @@
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  pwd VARCHAR(50) NOT NULL,
+  gender VARCHAR(10),
+  realName VARCHAR(20),
+  phone VARCHAR(11),
+  address VARCHAR(50),
+  actived BIT(1)
+)
+
+CREATE TABLE orderdetails (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  oid VARCHAR(50) NOT NULL,
+  pname VARCHAR(50) NOT NULL,
+  pid VARCHAR(50) NOT NULL,
+  price DOUBLE NOT NULL,
+  num INT NOT NULL,
+  success INT
+)
+
+CREATE TABLE orders (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  orderid VARCHAR(50) NOT NULL,
+  price DOUBLE,
+  customName VARCHAR(20),
+  address VARCHAR(50) NOT NULL,
+  phone VARCHAR(11) NOT NULL,
+  cuDate DATE,
+  success
+)
+
+CREATE TABLE products (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  pro_id VARCHAR(50) NOT NULL,
+  pro_name VARCHAR(50) NOT NULL,
+  pro_desc TEXT,
+  img VARCHAR(100),
+  price DOUBLE,
+  num INT,
+  cateitem VARCHAR(50),
+  userid INT
+)
+
+CREATE TABLE categorys (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  cate_id VARCHAR(50) NOT NULL,
+  cate_name VARCHAR(50)
+)
+
+CREATE TABLE cateitems (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  itemName VARCHAR(50),
+  category VARCHAR(50)
+)
+
+
+INSERT INTO categorys(cate_id,cate_name) VALUES('0001','电子产品');
+INSERT INTO categorys(cate_id,cate_name) VALUES('0002','居家出行');
+
+INSERT INTO cateitems(itemName,category) VALUES('二手电脑','0001');
+INSERT INTO cateitems(itemName,category) VALUES('二手手机','0001');
+INSERT INTO cateitems(itemName,category) VALUES('二手键盘','0001');
+INSERT INTO cateitems(itemName,category) VALUES('二手鼠标','0001');
+INSERT INTO cateitems(itemName,category) VALUES('二手自行车','0002');

@@ -1,6 +1,8 @@
 package com.hengtian.po;
 
-public class CateItem {
+import java.io.Serializable;
+
+public class CateItem implements Serializable {
 	private Integer id;
 	private String itemName;
 	private String category;
