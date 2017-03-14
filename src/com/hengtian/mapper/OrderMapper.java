@@ -18,9 +18,11 @@ public interface OrderMapper {
 	
 	public List<OrderDetail> findOrderDetailSell(int userid) throws Exception;
 	
+	public void endOrderDetail(int id) throws Exception;
+	
 	public void updateOrder(int id) throws Exception;
 	
 	public List<OrderDetail> successOrderList(int userid) throws Exception;
 
-	public boolean updateOrderStatus(Order o);	
+	public boolean updateOrderStatus(int oid);	
 }

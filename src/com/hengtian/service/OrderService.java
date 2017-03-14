@@ -22,9 +22,11 @@ public interface OrderService {
 	
 	void updateOrder(int id) throws Exception;
 	
+	void endOrderDetail(int id) throws Exception;
+	
 	List<OrderDetail> successOrderList(int userid) throws Exception;
 	
-	void updateOrderStatus(Order o) throws Exception;
+	void updateOrderStatus(int oid) throws Exception;
 	
 	
 }

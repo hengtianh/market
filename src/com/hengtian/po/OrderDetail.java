@@ -7,6 +7,7 @@ public class OrderDetail {
 	private String pId;
 	private double price;
 	private int num;
+	private int success;
 	
 	public OrderDetail() {
 		super();
@@ -55,4 +56,11 @@ public class OrderDetail {
 	public void setNum(int num) {
 		this.num = num;
 	}
+	public int getSuccess() {
+		return success;
+	}
+	public void setSuccess(int success) {
+		this.success = success;
+	}
+	
 }

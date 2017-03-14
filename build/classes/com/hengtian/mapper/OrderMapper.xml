@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE o.orderid = #{oid}
 	</select>
 	
+	<!-- 支付页面订单内容显示 -->
 	<select id="findAllOrderItems" parameterType="string" resultType="com.hengtian.po.OrderDetail">
 		SELECT pname,pid,price,num 
 		FROM orderdetails 
@@ -31,9 +32,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 我的订单 -->
 	<select id="findMyOrderDetail" parameterType="string" resultType="com.hengtian.po.OrderDetail">
-		SELECT od.oid , od.pname , od.price , od.num 
+		SELECT od.id , od.oid , od.pname , od.price , od.num , od.success
 		FROM orderdetails od , orders o 
-		WHERE od.oid = o.orderid AND o.customName = #{customName} AND o.success = 0 AND od.success = 0
+		WHERE od.oid = o.orderid AND o.customName = #{customName} AND o.success = 0
 	</select>
 	
 	<!-- 代发货订单 -->
@@ -44,11 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND p.userid = #{userid} 
 		AND od.success = 0
 		AND od.oid = o.orderid
-		AND o.success = 1
+		AND o.success = 0
 	</select>
 	
 	<update id="updateOrder" parameterType="int">
 		UPDATE orderdetails SET success = 1 WHERE id = #{id}
+	</update>
+	
+	<update id="endOrderDetail" parameterType="int">
+		UPDATE orderdetails SET END = 1 WHERE id = #{id}
 	</update>
 	
 	<select id="successOrderList" parameterType="int" resultType="com.hengtian.po.OrderDetail">
@@ -57,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where od.pid = p.pro_id and p.userid = #{userid} AND od.success = 1
 	</select>
 	
-	<update id="updateOrderStatus" parameterType="com.hengtian.po.Order">
-		UPDATE ORDER o SET o.success = 1 WHERE o.orderid = #{orderid} 
+	<update id="updateOrderStatus" parameterType="int">
+		UPDATE ORDER o SET o.success = 1 WHERE o.orderid = #{oid} 
 	</update>
 </mapper>

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PageResult implements Serializable {
 	private int pageIndex = 1; // 当前页
-	private int pageSize = 1;  //每页记录数
+	private int pageSize = 4;  //每页记录数
 	private int recordCount;   //总记录数
 	private int pageCount = (recordCount-1)/pageSize+1;  //总页数
 	private int start;  //查询的起始记录号

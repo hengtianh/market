@@ -32,10 +32,10 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/category/showMyProducts.action?userid=${sessionScope.user.id}">在售</a></li>
 						<li><a href="${pageContext.request.contextPath}/category/product/toAddProduct.action">上架货物</a></li>
-						<li><a href="${pageContext.request.contextPath}/order/findMyOrderDetail.action">待发货订单</a></li>
+						<li><a href="${pageContext.request.contextPath}/order/findOrderDetailSell.action">待发货订单</a></li>
+						<li><a href="${pageContext.request.contextPath}/order/successOrderList.action"">已发货订单</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">我的宝贝</a></li>
-						<li><a href="#">待发货</a></li>
+						<li><a href="${pageContext.request.contextPath}/order/findMyOrderDetail.action">我的宝贝</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="#">One more separated link</a></li>
 					</ul></li>
@@ -47,7 +47,7 @@
 				<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#" data-toggle="modal" data-target="#cart">购物
+				<li><a href="#" data-toggle="modal" data-target="#cart">购物车
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 				</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

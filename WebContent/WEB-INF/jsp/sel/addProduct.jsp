@@ -7,10 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title>Bootstrap 101 Template</title>
-
-<!-- Bootstrap -->
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/mystyle.css"
@@ -36,33 +33,29 @@
 	}
 </script>
 </head>
-<body style="background-color: #232830; height: 700px;">
-
+<body style="background-color: #232830;">
 	<div class="container" style="background-color: white;">
 		<!-- head页面 -->
 		<jsp:include page="/WEB-INF/jsp/head.jsp"></jsp:include>
-		<div style="height: 400px;">
-			<div class="row">
-				<div class="col-md-3">
-					<!-- Nav tabs -->
-					<div>
-						<ul class="nav nav-tabs nav-stacked" role="tablist">
-							<li role="presentation" class="active"><a href="#home"
-								aria-controls="home" role="tab" data-toggle="tab">上架商品</a></li>
-							<li role="presentation"><a href="#profile"
-								aria-controls="profile" role="tab" data-toggle="tab">添加图片</a></li>
-							<li role="presentation"><a href="#messages"
-								aria-controls="messages" role="tab" data-toggle="tab">在售商品</a></li>
-							<li role="presentation"><a href="#settings"
-								aria-controls="settings" role="tab" data-toggle="tab">待发货</a></li>
-						</ul>
-					</div>
+		<div class="row" style="height: 640px;">
+			<div class="col-md-3" style="margin-top: 50px;">
+				<!-- Nav tabs -->
+				<div>
+					<ul class="nav nav-tabs nav-stacked" role="tablist">
+						<li role="presentation" class="active"><a href="#home"
+							aria-controls="home" role="tab" data-toggle="tab">上架商品</a></li>
+						<!-- <li role="presentation"><a href="#profile"
+							aria-controls="profile" role="tab" data-toggle="tab">添加图片</a></li> -->
+					</ul>
 				</div>
-
-				<div class="col-md-9">
-					<!-- 添加基本信息 -->
-					<div class="tab-content col-md-8">
-						<div role="tabpanel" class="tab-pane active" id="home">
+			</div>
+			<div role="tabpanel" class="tab-pane" id="messages"
+				style="margin-top: 50px;">
+				<div class="tab-content col-md-8">
+					<%-- <jsp:include page="/WEB-INF/jsp/p_list.jsp"></jsp:include> --%>
+					<table class="table-hover" width="200px" border="1" cellpadding="0"
+						cellspacing="0">
+						<tr align="center">
 							<form
 								action="${pageContext.request.contextPath}/category/product/addProduct.action"
 								method="post" enctype="multipart/form-data">
@@ -113,103 +106,17 @@
 									<!-- <input type="text" class="form-control" id="address" placeholder="address"> -->
 								</div>
 							</form>
-						</div>
-
-						<!-- 图片上传组件 -->
-						<div role="tabpanel" class="tab-pane" id="profile">
-							<table width="80%" border="1" cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="200" valign="top"><div id="avatar_priview"></div></td>
-									<td>
-										<div id="altContent">
-											<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-												codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
-												width="650" height="450" id="myMovieName">
-												<param name="movie"
-													value="${pageContext.request.contextPath}/upload/avatar.swf" />
-												<param name="quality" value="high" />
-												<param name="bgcolor" value="#FFFFFF" />
-												<param name="flashvars"
-													value="imgUrl=${pageContext.request.contextPath}/upload/default.jpg&uploadUrl=${pageContext.request.contextPath}/upload/upfile.jsp&uploadSrc=false" />
-												<embed
-													src="${pageContext.request.contextPath}/upload/avatar.swf"
-													quality="high" bgcolor="#FFFFFF" width="650" height="450"
-													wmode="transparent"
-													flashVars="imgUrl=${pageContext.request.contextPath}/upload/default.jpg&uploadUrl=upload/upfile.jsp&uploadSrc=false"
-													name="myMovieName" align=""
-													type="application/x-shockwave-flash"
-													allowScriptAccess="always"
-													pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
-											</object>
-										</div>
-									</td>
-								</tr>
-							</table>
-						</div>
-
-						<div role="tabpanel" class="tab-pane" id="messages">
-							<%-- <jsp:include page="/WEB-INF/jsp/p_list.jsp"></jsp:include> --%>
-							<table class="table-hover" width="1200px" border="1"
-								align="center" cellpadding="0" cellspacing="0">
-								<tr align="center">
-									<td class="active">id</td>
-									<td class="warning">名称</td>
-									<td class="info">单价</td>
-									<td class="info">库存</td>
-									<td class="info">图片</td>
-									<td class="danger">描述</td>
-									<td class="danger">操作</td>
-								</tr>
-								<c:forEach items="${pl}" var="product">
-									<tr align="center">
-										<td class="active">${product.id}</td>
-										<%-- <td class="success">${product.pro_id}</td> --%>
-										<td class="warning">${product.pro_name }</td>
-										<td class="info">${product.price }</td>
-										<td class="info">${product.num }</td>
-										<td class="info"><img src="/path/upload/${product.img}"
-											width="25" height="25" /></td>
-										<td class="danger">${product.pro_desc }</td>
-									</tr>
-								</c:forEach>
-							</table>
-						</div>
-
-						<div role="tabpanel" class="tab-pane" id="settings">
-							<table class="table table-hover">
-								<tr>
-									<td class="info">商品名称</td>
-									<td class="info">单价</td>
-									<td class="info">数量</td>
-									<td class="info">操作</td>
-								</tr>
-								<c:forEach items="${ods}" var="od">
-									<tr>
-										<td class="success">${od.pName}</td>
-										<td class="warning">${od.price}</td>
-										<td class="info">${od.num }</td>
-										<td class="danger btn btn-default"><a href="#">发货</a></td>
-									</tr>
-								</c:forEach>
-							</table>
-
-						</div>
-
-
-					</div>
+						</tr>
+					</table>
 				</div>
 			</div>
+
 		</div>
+	</div>
+	<!-- foot页面 -->
+	<jsp:include page="/WEB-INF/jsp/foot.jsp"></jsp:include>
 
-		<!-- foot页面 -->
-		<jsp:include page="/WEB-INF/jsp/foot.jsp"></jsp:include>
-
-
-
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script
-			src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

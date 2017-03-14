@@ -119,7 +119,7 @@ public class CategoryHandler {
 		//加载商品详细信息，转向详细页
 		List<Product> lists = cService.findProductByUserId(userid);
 		model.addAttribute("pl", lists);
-		return "jsp/sel/addProduct";
+		return "jsp/sel/onSells";
 	}
 	
 	

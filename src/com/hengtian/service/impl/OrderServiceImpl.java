@@ -33,14 +33,13 @@ public class OrderServiceImpl implements OrderService {
 		OrderDetail od = null;
 		for(CartItem ci : cis){
 			od = new OrderDetail(orderid, ci.getInfo(), ci.getId(), ci.getPrice(), ci.getNum());
-			orderMapper.insertOrderDetail(od);
+			insertOrderDetail(od);
 		}
 	}
 
 	@Override
 	public void insertOrderDetail(OrderDetail od) throws Exception {
-		// TODO Auto-generated method stub
-		
+		orderMapper.insertOrderDetail(od);
 	}
 
 	@Override
@@ -48,10 +47,12 @@ public class OrderServiceImpl implements OrderService {
 		return orderMapper.findMyOrderDetail(customName);
 	}
 
+	/**
+	 * 待发货订单项
+	 */
 	@Override
 	public List<OrderDetail> findOrderDetailSell(int userid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return orderMapper.findOrderDetailSell(userid);
 	}
 
 	@Override
@@ -68,20 +69,26 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateOrder(int id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		// 商家发货后更新订单项状态
+		orderMapper.updateOrder(id);
 	}
 
+	/**
+	 * 已完成的订单列表
+	 */
 	@Override
 	public List<OrderDetail> successOrderList(int userid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return orderMapper.successOrderList(userid);
 	}
 
 	@Override
-	public void updateOrderStatus(Order o) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void updateOrderStatus(int oid) throws Exception {
+		orderMapper.updateOrderStatus(oid);
+	}
+
+	@Override
+	public void endOrderDetail(int id) throws Exception {
+		orderMapper.endOrderDetail(id);
 	}
 
 

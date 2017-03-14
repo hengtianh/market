@@ -22,7 +22,6 @@ public class OrderHandler {
 	
 	@Autowired
 	private OrderService oService;
-	
 	/**
 	 * 添加购物车
 	 * @param id 商品id
@@ -107,18 +106,89 @@ public class OrderHandler {
 		if (cart.getCartItems().size()>0){
 			oService.insertOrder(cart,u);
 		}
-		
+		//要修改为转向支付页面
 		return "redirect:/category/toIndex.action";
 	}
 	
+	/**
+	 * @author tianheng
+	 * @description 查询要发货的订单
+	 * @version 1.0
+	 * @time 2017年3月12日 下午12:01:19
+	 * @return TODO
+	 */
+	@RequestMapping("/findOrderDetailSell")
+	public String findOrderDetailSell(HttpSession session, Model model) throws Exception {
+		User u = (User) session.getAttribute("user");
+		int uid = u.getId();
+		List<OrderDetail> ods = oService.findOrderDetailSell(uid);
+		model.addAttribute("ods", ods);
+		return "jsp/sel/unfinishOrder";
+	}
+	
+	@RequestMapping("/finishOrderDetail")
+	public String finishOrderDetail(int id) throws Exception {
+		//修改订单状态为已发货
+		oService.updateOrder(id);
+		return "redirect:/category/toIndex.action";
+	}
+	
+	/**
+	 * @author tianheng
+	 * @description 我的宝贝列表
+	 * @version 1.0
+	 * @time 2017年3月12日 下午12:44:14
+	 * @return TODO
+	 */
 	@RequestMapping("/findMyOrderDetail")
 	public String findMyOrderDetail(HttpSession session, Model model) throws Exception {
-		//查询要发货的订单
 		User u = (User) session.getAttribute("user");
-		String cuName = u.getRealName();
-		List<OrderDetail> ods = oService.findMyOrderDetail(cuName);
-		model.addAttribute("ods", ods);
-		return "jsp/sel/addProduct";
+		String uname = u.getRealName();
+		List<OrderDetail> ods = oService.findMyOrderDetail(uname);
+		model.addAttribute("mods", ods);
+		return "jsp/sel/mythings";
 	}
+	
+	/**
+	 * @author tianheng
+	 * @description 修改订单状态为已完成
+	 * @version 1.0
+	 * @time 2017年3月12日 下午8:35:34
+	 * @return TODO
+	 */
+	@RequestMapping("/successOrder")
+	public String successOrder(int oid) throws Exception {
+		oService.updateOrderStatus(oid);
+		return "redirect:/category/toIndex.action";
+	}
+	/**
+	 * @author tianheng
+	 * @description 查询历史已发货订单
+	 * @version 1.0
+	 * @time 2017年3月12日 下午8:16:14
+	 * @return TODO
+	 */
+	@RequestMapping("/successOrderList")
+	public String successOrderList(HttpSession session, Model model) throws Exception {
+		User u = (User) session.getAttribute("user");
+		int uid = u.getId();
+		List<OrderDetail> ods = oService.successOrderList(uid);
+		model.addAttribute("sodl", ods);
+		return "jsp/sel/successOrderList";
+	}
+	
+	/**
+	 * @author tianheng
+	 * @description 修改状态为已收货
+	 * @version 1.0
+	 * @time 2017年3月12日 下午8:33:20
+	 * @return TODO
+	 */
+	@RequestMapping("/endOrderDetail")
+	public String endOrderDetail(int id) throws Exception {
+		oService.endOrderDetail(id);
+		return "redirect:/category/toIndex.action";
+	}
+	
 	
 }

@@ -6,22 +6,13 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 	<title>Bootstrap 101 Template</title>
-
-	<!-- Bootstrap -->
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet">
-	
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
 	<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
 </head>
 <body style="background-color:#232830;">
-
 <div class="container" style="background-color:white;">
 <!-- head页面 -->
 <jsp:include page="head.jsp"></jsp:include>
@@ -51,9 +42,19 @@
 			</div>
 		</div>
 	</div>
-</div>
 <!-- foot页面 -->
-<jsp:include page="foot.jsp"></jsp:include>
+<div class="container-fluid" style="height:90px;background-color:gray;">
+	<p class="foot_p">&copy tianh.maker.com版权所有</p>
+	<ul class="nav nav-pills  foot_a">
+		<li role="presentation" class=""><a href="#">网站信息</a></li>
+		<li role="presentation" class=""><a href="#">招聘信息</a></li>
+		<li role="presentation" class=""><a href="#">帮助信息</a></li>
+		<li role="presentation" class=""><a href="#">客户反馈</a></li>
+		<li role="presentation" class=""><a href="#">联系我们</a></li>
+	</ul>
+	</div>
+</div>
+
 
 
 
