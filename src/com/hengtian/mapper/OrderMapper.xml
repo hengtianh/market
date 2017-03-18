@@ -24,11 +24,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 支付页面订单内容显示 -->
-	<select id="findAllOrderItems" parameterType="string" resultType="com.hengtian.po.OrderDetail">
-		SELECT pname,pid,price,num 
-		FROM orderdetails 
-		WHERE oid = #{oid};
+	<select id="findAllOrderItems" parameterType="string" resultMap="OrderDetailMap">
+		SELECT ods.pname,ods.pid,ods.price,ods.num,ods.oid,os.price total
+		FROM orderdetails ods,orders os
+		WHERE ods.oid = #{oid} AND ods.oid = os.orderid
 	</select>
+	<resultMap type="com.hengtian.po.OrderItemVO" id="OrderDetailMap">
+		<result column="oid" property="oid"/>
+		<result column="total" property="total"/>
+		<collection property="od" ofType="com.hengtian.po.OrderDetail"> 
+			<result column="pid" property="pId"/>
+			<result column="pname" property="pName"/>
+			<result column="price" property="price"/>
+			<result column="num" property="num"/>
+		</collection>
+	</resultMap>
 	
 	<!-- 我的订单 -->
 	<select id="findMyOrderDetail" parameterType="string" resultType="com.hengtian.po.OrderDetail">
@@ -62,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where od.pid = p.pro_id and p.userid = #{userid} AND od.success = 1
 	</select>
 	
-	<update id="updateOrderStatus" parameterType="int">
+	<update id="updateOrderStatus" parameterType="String">
 		UPDATE ORDER o SET o.success = 1 WHERE o.orderid = #{oid} 
 	</update>
 </mapper>

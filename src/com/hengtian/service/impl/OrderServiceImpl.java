@@ -11,6 +11,7 @@ import com.hengtian.po.Cart;
 import com.hengtian.po.CartItem;
 import com.hengtian.po.Order;
 import com.hengtian.po.OrderDetail;
+import com.hengtian.po.OrderItemVO;
 import com.hengtian.po.User;
 import com.hengtian.service.OrderService;
 import com.hengtian.utils.IDGenerater;
@@ -21,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderMapper orderMapper;
 
 	@Override
-	public void insertOrder(Cart c, User u) throws Exception {
+	public String insertOrder(Cart c, User u) throws Exception {
 		//根据购物车创建订单
 		String orderid = IDGenerater.generatProId();
 		Date date = new Date();
@@ -35,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 			od = new OrderDetail(orderid, ci.getInfo(), ci.getId(), ci.getPrice(), ci.getNum());
 			insertOrderDetail(od);
 		}
+		return orderid;
 	}
 
 	@Override
@@ -57,14 +59,14 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order findOrder(String oid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return orderMapper.findOrder(oid);
 	}
 
 	@Override
-	public List<OrderDetail> findAllOrderItems(String oid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public OrderItemVO findAllOrderItems(String oid) throws Exception {
+		
+		return orderMapper.findAllOrderItems(oid);
 	}
 
 	@Override
@@ -82,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void updateOrderStatus(int oid) throws Exception {
+	public void updateOrderStatus(String oid) throws Exception {
 		orderMapper.updateOrderStatus(oid);
 	}
 

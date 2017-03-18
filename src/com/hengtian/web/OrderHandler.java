@@ -1,8 +1,13 @@
 package com.hengtian.web;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +17,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hengtian.po.Cart;
 import com.hengtian.po.CartItem;
+import com.hengtian.po.Order;
 import com.hengtian.po.OrderDetail;
+import com.hengtian.po.OrderItemVO;
+import com.hengtian.po.PayVO;
 import com.hengtian.po.User;
 import com.hengtian.service.OrderService;
+import com.hengtian.utils.PaymentUtil;
 
 @Controller
 @RequestMapping("/order")
 public class OrderHandler {
+	private static String p1_MerId;
+	private static String keyValue;
+	private static String responseURL;
+	static {
+		Properties prop = new Properties();
+		try {
+			InputStream in = OrderHandler.class.getClassLoader().getResourceAsStream("merchantInfo.properties");
+			prop.load(in);
+			p1_MerId = prop.getProperty("p1_MerId");
+			keyValue = prop.getProperty("keyValue");
+			responseURL = prop.getProperty("responseURL");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Autowired
 	private OrderService oService;
@@ -103,11 +127,12 @@ public class OrderHandler {
 		//获得session中的购物车，迭代购物项，生成表记录
 		Cart cart = (Cart) session.getAttribute("cart");
 		User u = (User) session.getAttribute("user");
+		String orderid = null;
 		if (cart.getCartItems().size()>0){
-			oService.insertOrder(cart,u);
+			orderid = oService.insertOrder(cart,u);
 		}
 		//要修改为转向支付页面
-		return "redirect:/category/toIndex.action";
+		return "redirect:/order/toPay.action?orderid=" + orderid;
 	}
 	
 	/**
@@ -157,7 +182,7 @@ public class OrderHandler {
 	 * @return TODO
 	 */
 	@RequestMapping("/successOrder")
-	public String successOrder(int oid) throws Exception {
+	public String successOrder(String oid) throws Exception {
 		oService.updateOrderStatus(oid);
 		return "redirect:/category/toIndex.action";
 	}
@@ -190,5 +215,82 @@ public class OrderHandler {
 		return "redirect:/category/toIndex.action";
 	}
 	
+	@RequestMapping("/toPay")
+	public String toPay(String orderid, Model model) throws Exception{
+		OrderItemVO list = oService.findAllOrderItems(orderid);
+		model.addAttribute("ods", list);
+		return "jsp/sel/toPay";
+	}
+	
+	
+	@RequestMapping("/pay")
+	public String pay(HttpServletRequest request, String ordersnum, String price, String pd_FrpId) throws Exception{
+		
+		PayVO pay = new PayVO(ordersnum, price,p1_MerId,responseURL);
+		String hmac = PaymentUtil.buildHmac(pay.getP0_Cmd(), 
+				pay.getP1_MerId(), pay.getP2_Order(), pay.getP3_Amt(), pay.getP4_Cur(), pay.getP5_Pid(),
+				pay.getP6_Pcat(), pay.getP7_Pdesc(), pay.getP8_Url(), pay.getP9_SAF(), pay.getPa_MP(), 
+				pd_FrpId, pay.getPr_NeedResponse(), keyValue);
+		
+		pay.setHmac(hmac);
+		fillData(request,pay,pd_FrpId);
+		return "jsp/sel/sure";
+	}
+	
+	public void fillData(HttpServletRequest request, PayVO pay, String pd_FrpId){
+		request.setAttribute("p0_Cmd",pay.getP0_Cmd());
+		request.setAttribute("p1_MerId",pay.getP1_MerId() );
+		request.setAttribute("p2_Order",pay.getP2_Order());
+		request.setAttribute("p3_Amt",pay.getP3_Amt());
+		request.setAttribute("p4_Cur",pay.getP4_Cur());
+		request.setAttribute("p5_Pid",pay.getP5_Pid());
+		request.setAttribute("p6_Pcat",pay.getP6_Pcat());
+		request.setAttribute("p7_Pdesc",pay.getP7_Pdesc());
+		request.setAttribute("p8_Url",pay.getP8_Url());
+		request.setAttribute("p9_SAF",pay.getP9_SAF());
+		request.setAttribute("pa_MP",pay.getPa_MP());
+		request.setAttribute("pr_NeedResponse",pay.getPr_NeedResponse());
+		request.setAttribute("pd_FrpId",pd_FrpId);
+		request.setAttribute("hmac",pay.getHmac());
+	}
+	
+	@RequestMapping("/payResponse")
+	public void payResponse(HttpServletRequest request, HttpServletResponse response) throws Exception{
+			String p1_MerId = request.getParameter("p1_MerId");
+			String r0_Cmd= request.getParameter("r0_Cmd");
+			String r1_Code= request.getParameter("r1_Code");//1代表成功
+			String r2_TrxId= request.getParameter("r2_TrxId");
+			String r3_Amt= request.getParameter("r3_Amt");
+			String r4_Cur= request.getParameter("r4_Cur");
+			String r5_Pid= request.getParameter("r5_Pid");
+			String r6_Order= request.getParameter("r6_Order");//订单号
+			String r7_Uid= request.getParameter("r7_Uid");
+			String r8_MP= request.getParameter("r8_MP");
+			String r9_BType= request.getParameter("r9_BType");//为“1”: 浏览器重定向;为“2”: 服务器点对点通讯.
+			String hmac= request.getParameter("hmac");
+			//验证信息的正确性
+			boolean b = PaymentUtil.verifyCallback(hmac, p1_MerId, r0_Cmd, r1_Code, r2_TrxId, r3_Amt, r4_Cur, r5_Pid, r6_Order, r7_Uid, r8_MP, r9_BType, "69cl522AV6q613Ii4W6u8K6XuW8vM1N6bFgyv769220IuYe9u37N4y7rI4Pl");
+			if(b){
+				if("1".equals(r1_Code)){
+					//支付成功
+					if("2".equals(r9_BType)){
+						response.getWriter().write("success");
+					}
+					//更改订单的状态
+					Order o = oService.findOrder(r6_Order);
+					if(o==null){
+						response.getWriter().write("没有该订单");
+						return;
+					}
+					oService.updateOrderStatus(r6_Order);
+					response.getWriter().write("<script type='text/javascript'>alert('支付成功')</script>");
+					response.setHeader("Refresh", "0;URL="+request.getContextPath());
+				}else{
+					response.getWriter().write("支付失败！请与网站联系");
+				}
+			}else{
+				response.getWriter().write("返回的信息有误,请与网站联系");
+			}
+	}
 	
 }
