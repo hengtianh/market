@@ -3,6 +3,7 @@ package com.hengtian.po;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class CateItemVo implements Serializable{
 
 	private String cate_name;

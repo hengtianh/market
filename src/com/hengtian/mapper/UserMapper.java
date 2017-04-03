@@ -1,5 +1,6 @@
 package com.hengtian.mapper;
 
+import com.hengtian.po.Admin;
 import com.hengtian.po.User;
 
 public interface UserMapper {
@@ -8,4 +9,5 @@ public interface UserMapper {
 	public void insertUser(User user) throws Exception;
 	public void updateUserActived(String email) throws Exception;
 	public void updateUser(User user) throws Exception;
+	public Admin findAdmin(Admin admin) throws Exception;
 }

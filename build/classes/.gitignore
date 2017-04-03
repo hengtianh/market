@@ -1,2 +1,10 @@
+/SqlMapConfig.xml
 /com/
+/db.properties
+/log4j.properties
+/mail.properties
+/market/
 /merchantInfo.properties
+/spring/
+/sqlmap/
+/views.properties

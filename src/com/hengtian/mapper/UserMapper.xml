@@ -23,4 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateUser" parameterType="com.hengtian.po.User">
 		UPDATE users SET realName=#{realName},phone=#{phone},address=#{address} WHERE id=#{id}
 	</update>
+	
+	<select id="findAdmin" parameterType="com.hengtian.po.Admin" resultType="com.hengtian.po.Admin">
+		select name,password from admins where name = #{username} and password = #{password}
+	</select>
 </mapper>

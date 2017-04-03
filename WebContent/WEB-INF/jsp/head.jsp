@@ -40,11 +40,11 @@
 						<li><a href="#">One more separated link</a></li>
 					</ul></li>
 			</ul>
-			<form class="navbar-form navbar-left" role="search">
+			<form class="navbar-form navbar-left" role="search" action="${pageContext.request.contextPath}/category/search.action" method="post">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Search">
+					<input type="text" name="label" class="form-control" placeholder="Search">
 				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
+				<button type="submit" class="btn btn-default">搜索</button>
 			</form>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#" data-toggle="modal" data-target="#cart">购物车

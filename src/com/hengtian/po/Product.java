@@ -2,6 +2,7 @@ package com.hengtian.po;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Product implements Serializable {
 	private Integer id;
 	private String pro_id;

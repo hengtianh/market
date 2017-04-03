@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/jsp/foot.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/head.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/manager/head.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/p_list.jsp=UTF-8
 encoding/<project>=GBK

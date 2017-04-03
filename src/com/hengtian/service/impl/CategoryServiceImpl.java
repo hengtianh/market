@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hengtian.mapper.CategoryMapper;
 import com.hengtian.po.CateItem;
 import com.hengtian.po.CateItemVo;
+import com.hengtian.po.Category;
+import com.hengtian.po.CountCondition;
 import com.hengtian.po.Product;
 import com.hengtian.service.CategoryService;
 import com.hengtian.utils.PageResult;
@@ -67,9 +69,20 @@ public class CategoryServiceImpl implements CategoryService {
 	 * 查询总记录数
 	 */
 	@Override
-	public int findProductCount(PageResult pr) throws Exception {
-		int pageCount = categoryMapper.findProductCount(pr);
+	public int findProductCount(CountCondition condition) throws Exception {
+		int pageCount = categoryMapper.findProductCount(condition);
 		return pageCount;
+	}
+
+	@Override
+	public void insertCategory(Category c) throws Exception {
+		categoryMapper.insertCategory(c);
+	}
+
+	@Override
+	public List<Product> findProductLikeLabel(String label) throws Exception {
+		List<Product> lists = categoryMapper.findProductLikeLabel(label);
+		return lists;
 	}
 
 }

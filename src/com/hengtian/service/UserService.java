@@ -12,4 +12,6 @@ public interface UserService {
 	public void updateUser(User user) throws Exception;
 	
 	public String ifUserExist(String email) throws Exception;
+	
+	public boolean adminLogin(String username, String password) throws Exception;
 }

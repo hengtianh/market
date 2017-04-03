@@ -2,6 +2,7 @@ package com.hengtian.po;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PayVO implements Serializable {
 	private String p0_Cmd = "Buy";
 	private String p1_MerId;

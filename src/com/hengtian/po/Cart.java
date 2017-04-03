@@ -11,7 +11,7 @@ public class Cart {
 		return cartItems;
 	}
 	public void setCartItems(Set<CartItem> cartItems) {
-		cartItems = cartItems;
+		this.cartItems = cartItems;
 	}
 	public double getPrice() {
 		//计算总金额,每次获得时，先将总金额清零

@@ -2,6 +2,7 @@ package com.hengtian.po;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Category implements Serializable {
 	private Integer id;
 	private String cate_id;

@@ -64,7 +64,7 @@ public class UserHandler {
 	}
 	
 	/**
-	 * 用户登录方法
+	 * 用户注册方法
 	 * @param user
 	 * @return 主页的逻辑视图名
 	 */

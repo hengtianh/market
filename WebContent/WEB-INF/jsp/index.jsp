@@ -41,7 +41,7 @@
 								<div class="thumbnail">
 									<a
 										href="${pageContext.request.contextPath}/category/showDetail.action?pro_id=${p.pro_id}"><img
-										src="/path/upload/${p.img}" alt="..." width="168" height="198"></a>
+										src="/pic/${p.img}" alt="..." width="168" height="198"></a>
 									<div class="caption">
 										<h3>${p.pro_name}</h3>
 										<p>${p.pro_desc}</p>

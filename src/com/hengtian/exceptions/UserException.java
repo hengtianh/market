@@ -5,6 +5,7 @@ package com.hengtian.exceptions;
  * @author tian heng
  *
  */
+@SuppressWarnings("serial")
 public class UserException extends Exception {
 	
 	private String message;

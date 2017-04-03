@@ -64,6 +64,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT id,itemName FROM cateitems
 	</select>
 	
+	<insert id="insertCategory" parameterType="com.hengtian.po.Category">
+		INSERT INTO categorys(cate_id,cate_name) VALUES(#{cate_id},#{cate_name})
+	</insert>
+	
 	<insert id="insertProduct" parameterType="com.hengtian.po.Product">
 		INSERT INTO 
 		products(pro_id,pro_name,pro_desc,img,price,num,cateitem,userid) 
@@ -78,26 +82,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM products
 	</select>
 	
+	<select id="findProductLikeLabel" parameterType="string" resultType="com.hengtian.po.Product">
+		SELECT * FROM products WHERE pro_desc LIKE '%${_parameter}%'
+	</select>
+	
 	<select id="findProductByUserId" parameterType="int" resultType="com.hengtian.po.Product">
 		SELECT * FROM products WHERE userid=#{userid}
 	</select>
 	
 	<select id="findProductLimit" parameterType="com.hengtian.utils.PageResult" resultType="com.hengtian.po.Product">
-		select * 
-		from products p , cateitems c 
+		SELECT * 
+		FROM products p LEFT JOIN cateitems c 
+		ON p.cateitem = c.id  
 		<where>
 			<if test="type!=null">
-				AND p.pro_name = c.itemName and c.id = #{type} 
+				and c.id = #{type} 
 			</if>
 		</where> 
 		LIMIT #{start},#{pageSize}
 	</select>
 	
-	<select id="findProductCount" parameterType="com.hengtian.utils.PageResult" resultType="int">
-		SELECT COUNT(*) FROM products p
+	<select id="findProductCount" parameterType="com.hengtian.po.CountCondition" resultType="int">
+		SELECT COUNT(id) FROM products p
 		<where>
 			<if test="type!=null">
-				AND p.pro_name = (select itemName from cateitems where id = #{type})
+				AND p.cateitem = #{type}
+			</if>
+			<if test="label!=null">
+				and p.pro_desc LIKE '%${label}%'
 			</if>
 		</where>
 	</select>

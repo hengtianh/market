@@ -2,14 +2,14 @@ package com.hengtian.utils;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PageResult implements Serializable {
 	private int pageIndex = 1; // 当前页
 	private int pageSize = 4;  //每页记录数
 	private int recordCount;   //总记录数
 	private int pageCount = (recordCount-1)/pageSize+1;  //总页数
 	private int start;  //查询的起始记录号
-	private int size = 3;  //每页显示的页码数
-	private int startPage;  //起始页码
+	private int size = 4;  //每页显示的页码数
 	private int endPage;  //尾页码
 	private int[] pages;
 	private Integer type;
@@ -18,34 +18,54 @@ public class PageResult implements Serializable {
 		super();
 	}
 
-	public PageResult(int recordCount, int pageIndex) {
+	public PageResult(int recordCount, int pageIndex, Integer type) {
 		this.recordCount = recordCount;
 		this.pageIndex = pageIndex;
-		this.start = (pageIndex-1)*pageSize;
-		this.pageCount = (recordCount-1)/pageSize+1;
-		if(recordCount>=size*pageSize){
+		this.type = type;
+		this.start = (pageIndex-1) * pageSize;
+		this.pageCount = (recordCount-1) / pageSize+1;
+		if ((recordCount-start) < pageSize){
+			pageSize = recordCount-start;
+		}
+		if (recordCount >= size * pageSize){//总记录数大于约定显示页数
 			pages = new int[size];
-			if(pageIndex==1){
+			if (pageIndex == 1){
 				//当前页为第一页
-				for(int i=1; i<=pages.length; i++){
-					pages[i-1] = pageIndex + i-1;
+				for (int i=0; i < pages.length; i++){
+					pages[i] = pageIndex + i;
 				}
 				
-			}else if(pageIndex==pageCount){
+			} else if (pageIndex == pageCount){
 				//当前页为最后一页
-				for(int i=1; i<=pages.length; i++){
-					pages[i-1] = pageIndex-size + i;//3,4,5  5-3+1 5-3+2
+				for (int i=0; i < pages.length; i++){
+					pages[i] = pageIndex - (pages.length - 1 - i);
 				}
-			}else{
+			} else {
 				//当前页在中间
-				for(int i=1; i<=pages.length; i++){
-					pages[i-1] = pageIndex-size/2-1+i;//3,4,5  4-2+i 4-2+i 4-2+i
+				for (int i=0; i < pages.length; i++){
+					int center = pages.length / 2;
+					pages[i] = pageIndex - (center - i);
 				}
 			}
-		}else{
+		}else{//总记录数小于约定显示页数，则全显示
 			pages = new int[pageCount];
-			for(int i=1; i<=pages.length; i++){
-				pages[i-1] = i;   //
+			if (pageIndex == 1){
+				//当前页为第一页
+				for (int i=0; i < pages.length; i++){
+					pages[i] = pageIndex + i;
+				}
+				
+			} else if (pageIndex == pageCount){
+				//当前页为最后一页
+				for (int i=0; i < pages.length; i++){
+					 pages[i] = pageIndex - (pages.length - 1 - i);
+				}
+			} else {
+				//当前页在中间
+				for (int i=0; i < pages.length; i++){
+					int center = pages.length / 2;
+					pages[i] = pageIndex - (center - i);
+				}
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hengtian.exceptions.UserException;
 import com.hengtian.mapper.UserMapper;
+import com.hengtian.po.Admin;
 import com.hengtian.po.User;
 import com.hengtian.service.UserService;
 import com.hengtian.utils.MailUtil;
@@ -85,6 +86,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String ifUserExist(String email) throws Exception {
 		return userMapper.findUserByEmail(email);
+	}
+
+
+	@Override
+	public boolean adminLogin(String username, String password) throws Exception {
+		/**
+		 * π‹¿ÌÜTµ«‰õ
+		 */		
+		Admin admin = new Admin(username, password);
+		Admin a = userMapper.findAdmin(admin);
+		boolean r = false;
+		if (a != null){
+			r = true;
+		}
+		return r;
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hengtian.po.CountCondition;
 import com.hengtian.po.Product;
 import com.hengtian.service.CategoryService;
 import com.hengtian.utils.PageResult;
@@ -19,13 +20,15 @@ public class PageHandler {
 	private CategoryService cService;
 	
 	@RequestMapping("/getPage")
-	public String getPage(PageResult pr, Model model) throws Exception {
+	public String getPage(int pageIndex, Integer type, Model model) throws Exception {
 		
 		//根据pageIndex来查询需要显示的页面
 		
 		//封装分页查询所需的数据
-		int recordCount = cService.findProductCount(pr);
-		PageResult pageResult = new PageResult(recordCount,pr.getPageIndex());
+		CountCondition condition = new CountCondition(null,type);
+		int recordCount = cService.findProductCount(condition);
+		
+		PageResult pageResult = new PageResult(recordCount,pageIndex,type);
 		
 		//分页查询数据
 		List<Product> pageLimit = cService.findProductLimit(pageResult);
