@@ -3,9 +3,6 @@ package com.hengtian.po;
 import java.io.Serializable;
 
 public class CountCondition implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String label;
 	private Integer type;
@@ -27,5 +24,4 @@ public class CountCondition implements Serializable {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	
 }

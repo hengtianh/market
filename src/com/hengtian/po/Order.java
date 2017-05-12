@@ -33,7 +33,6 @@ public class Order {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
 	public Integer getId() {
 		return id;
 	}

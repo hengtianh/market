@@ -1,7 +1,6 @@
 package com.hengtian.service;
 
 import java.util.List;
-
 import com.hengtian.po.CateItem;
 import com.hengtian.po.CateItemVo;
 import com.hengtian.po.Category;
@@ -13,9 +12,11 @@ public interface CategoryService {
 	
 	public List<CateItemVo> findAllCategory() throws Exception; 
 	
+	public List<Category> findAllCategoryid() throws Exception; 
+	
 	public List<CateItem> findAllItems() throws Exception;
 	
-	public void insertCategory(Category c) throws Exception;
+	public void insertCategory(CateItem c) throws Exception;
 	
 	public void insertProduct(Product product) throws Exception;
 	

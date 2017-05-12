@@ -24,5 +24,4 @@ public class OrderItemVO {
 	public void setOd(List<OrderDetail> od) {
 		this.od = od;
 	}
-	
 }

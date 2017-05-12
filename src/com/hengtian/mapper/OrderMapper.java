@@ -1,7 +1,6 @@
 package com.hengtian.mapper;
 
 import java.util.List;
-
 import com.hengtian.po.Order;
 import com.hengtian.po.OrderDetail;
 import com.hengtian.po.OrderItemVO;
@@ -25,5 +24,11 @@ public interface OrderMapper {
 	
 	public List<OrderDetail> successOrderList(int userid) throws Exception;
 
-	public boolean updateOrderStatus(String oid);	
+	public boolean updateOrderStatus(String oid);
+
+	public void updateProNum(OrderDetail od);
+
+	public int checkStatus(String oid);
+
+	public void afterPay(String oid);	
 }

@@ -3,20 +3,16 @@ package com.hengtian.web;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.hengtian.po.CateItem;
 import com.hengtian.po.CateItemVo;
-import com.hengtian.po.Category;
 import com.hengtian.po.CountCondition;
 import com.hengtian.po.Product;
 import com.hengtian.service.CategoryService;
@@ -29,10 +25,8 @@ public class CategoryHandler {
 
 	@Autowired
 	private CategoryService cService;
-
 	/**
 	 * 主页面查询类别信息
-	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -41,7 +35,6 @@ public class CategoryHandler {
 		List<CateItemVo> lists = cService.findAllCategory();
 		return lists;
 	}
-
 	/**
 	 * @author tianheng
 	 * @description 添加商品类别
@@ -50,11 +43,10 @@ public class CategoryHandler {
 	 * @return TODO
 	 */
 	@RequestMapping("/addCategory")
-	public String addCategory(Category c) throws Exception {
+	public String addCategory(CateItem c) throws Exception {
 		cService.insertCategory(c);
 		return "jsp/manager/addCategory";
 	}
-
 	/**
 	 * 转向添加商品页面
 	 * 
@@ -68,10 +60,8 @@ public class CategoryHandler {
 		model.addAttribute("items", lists);
 		return "jsp/sel/addProduct";
 	}
-
 	/**
 	 * 添加商品信息
-	 * 
 	 * @param product
 	 * @param proImg
 	 * @return
@@ -98,10 +88,8 @@ public class CategoryHandler {
 		cService.insertProduct(product);
 		return "redirect:/category/toIndex.action";
 	}
-
 	/**
 	 * 加载首页内容，跳转到首页
-	 * 
 	 * @param model
 	 * @return
 	 * @throws Exception
@@ -111,7 +99,6 @@ public class CategoryHandler {
 		// 封装分页查询所需的数据
 		CountCondition condition = new CountCondition(null,type);
 		int recordCount = cService.findProductCount(condition);
-
 		PageResult pageResult = new PageResult(recordCount, 1, type);
 		List<Product> pageLimit = cService.findProductLimit(pageResult);
 		model.addAttribute("products", pageLimit);
@@ -119,7 +106,6 @@ public class CategoryHandler {
 		request.setAttribute("pageOrder", pageResult);
 		return "jsp/index";
 	}
-	
 	@RequestMapping("/search")
 	public String search(Model model, String label, HttpServletRequest request) throws Exception {
 		// 封装分页查询所需的数据
@@ -132,7 +118,6 @@ public class CategoryHandler {
 		request.setAttribute("pageOrder", pageResult);
 		return "jsp/index";
 	}
-
 	/**
 	 * 查询商品的详细信息
 	 * 
@@ -148,7 +133,6 @@ public class CategoryHandler {
 		model.addAttribute("pd", p);
 		return "jsp/p_detail";
 	}
-
 	@RequestMapping("/showMyProducts")
 	public String showMyProducts(Integer userid, Model model) throws Exception {
 		// 加载商品详细信息，转向详细页
@@ -156,5 +140,4 @@ public class CategoryHandler {
 		model.addAttribute("pl", lists);
 		return "jsp/sel/onSells";
 	}
-
 }

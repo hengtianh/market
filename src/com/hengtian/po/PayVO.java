@@ -102,6 +102,4 @@ public class PayVO implements Serializable {
 	public void setHmac(String hmac) {
 		this.hmac = hmac;
 	}
-	
-		
 }

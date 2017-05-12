@@ -62,5 +62,4 @@ public class OrderDetail {
 	public void setSuccess(int success) {
 		this.success = success;
 	}
-	
 }

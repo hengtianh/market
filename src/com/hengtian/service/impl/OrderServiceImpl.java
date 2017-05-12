@@ -3,9 +3,7 @@ package com.hengtian.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.hengtian.mapper.OrderMapper;
 import com.hengtian.po.Cart;
 import com.hengtian.po.CartItem;
@@ -38,17 +36,14 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return orderid;
 	}
-
 	@Override
 	public void insertOrderDetail(OrderDetail od) throws Exception {
 		orderMapper.insertOrderDetail(od);
 	}
-
 	@Override
 	public List<OrderDetail> findMyOrderDetail(String customName) throws Exception {
 		return orderMapper.findMyOrderDetail(customName);
 	}
-
 	/**
 	 * 待发货订单项
 	 */
@@ -56,25 +51,21 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDetail> findOrderDetailSell(int userid) throws Exception {
 		return orderMapper.findOrderDetailSell(userid);
 	}
-
 	@Override
 	public Order findOrder(String oid) throws Exception {
-		
 		return orderMapper.findOrder(oid);
 	}
-
 	@Override
 	public OrderItemVO findAllOrderItems(String oid) throws Exception {
-		
 		return orderMapper.findAllOrderItems(oid);
 	}
-
 	@Override
-	public void updateOrder(int id) throws Exception {
+	public void updateOrder(int id, int num, String pid) throws Exception {
 		// 商家发货后更新订单项状态
 		orderMapper.updateOrder(id);
+		OrderDetail od = new OrderDetail(null, null, pid, 0, num);
+		orderMapper.updateProNum(od);
 	}
-
 	/**
 	 * 已完成的订单列表
 	 */
@@ -82,17 +73,22 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDetail> successOrderList(int userid) throws Exception {
 		return orderMapper.successOrderList(userid);
 	}
-
 	@Override
 	public void updateOrderStatus(String oid) throws Exception {
-		orderMapper.updateOrderStatus(oid);
+		int i = orderMapper.checkStatus(oid);
+		if (i == 0) {
+			orderMapper.updateOrderStatus(oid);
+		}
 	}
-
 	@Override
-	public void endOrderDetail(int id) throws Exception {
+	public void endOrderDetail(int id, String oid) throws Exception {
 		orderMapper.endOrderDetail(id);
+		updateOrderStatus(oid);
 	}
-
-
-
+	@Override
+	public void afterPay(String oid) throws Exception {
+		orderMapper.afterPay(oid);
+	}
+	
+	
 }

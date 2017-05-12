@@ -44,23 +44,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findMyOrderDetail" parameterType="string" resultType="com.hengtian.po.OrderDetail">
 		SELECT od.id , od.oid , od.pname , od.price , od.num , od.success
 		FROM orderdetails od , orders o 
-		WHERE od.oid = o.orderid AND o.customName = #{customName} AND o.success = 0
+		WHERE od.oid = o.orderid AND o.customName = #{customName} AND o.success = 0 and od.end = 0
 	</select>
 	
 	<!-- 代发货订单 -->
 	<select id="findOrderDetailSell" parameterType="int" resultType="com.hengtian.po.OrderDetail">
-		SELECT od.id , od.oid , od.pname , od.price , od.num 
+		SELECT od.id , od.oid , od.pname , od.price , od.num , od.pid
 		FROM orderdetails od , products p , orders o
 		WHERE od.pid = p.pro_id 
 		AND p.userid = #{userid} 
 		AND od.success = 0
 		AND od.oid = o.orderid
-		AND o.success = 0
+		AND o.success = 1
 	</select>
 	
 	<update id="updateOrder" parameterType="int">
 		UPDATE orderdetails SET success = 1 WHERE id = #{id}
 	</update>
+	
+	<update id="updateProNum" parameterType="com.hengtian.po.OrderDetail">
+		UPDATE products SET num = num - #{num} WHERE pro_id = #{pId};
+	</update>
+	
+	<select id="checkStatus" parameterType="String" resultType="int">
+	   SELECT COUNT(*) FROM orderdetails 
+	   WHERE oid = #{oid} AND END = 0
+	</select>
 	
 	<update id="endOrderDetail" parameterType="int">
 		UPDATE orderdetails SET END = 1 WHERE id = #{id}
@@ -73,6 +82,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<update id="updateOrderStatus" parameterType="String">
-		UPDATE ORDER o SET o.success = 1 WHERE o.orderid = #{oid} 
+		UPDATE orders o SET o.success = 1 WHERE o.orderid = #{oid} 
+	</update>
+	
+	<update id="afterPay" parameterType="String">
+	    UPDATE orders o SET o.success = 1 WHERE o.orderid = #{oid} 
 	</update>
 </mapper>

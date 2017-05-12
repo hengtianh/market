@@ -1,7 +1,6 @@
 package com.hengtian.service;
 
 import java.util.List;
-
 import com.hengtian.po.Cart;
 import com.hengtian.po.Order;
 import com.hengtian.po.OrderDetail;
@@ -21,13 +20,17 @@ public interface OrderService {
 	
 	List<OrderDetail> findOrderDetailSell(int userid) throws Exception;
 	
-	void updateOrder(int id) throws Exception;
+	void updateOrder(int id, int num, String pid) throws Exception;
 	
-	void endOrderDetail(int id) throws Exception;
+	void endOrderDetail(int id, String oid) throws Exception;
 	
 	List<OrderDetail> successOrderList(int userid) throws Exception;
 	
 	void updateOrderStatus(String oid) throws Exception;
+
+	void afterPay(String oid) throws Exception;
+	
+	
 	
 	
 }

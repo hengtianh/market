@@ -8,7 +8,6 @@ import java.util.Arrays;
 public class PaymentUtil {
 
 	private static String encodingCharset = "UTF-8";
-	
 	/**
 	 * 生成hmac方法
 	 * 
@@ -59,10 +58,8 @@ public class PaymentUtil {
 		sValue.append(pd_FrpId);
 		// 应答机制
 		sValue.append(pr_NeedResponse);
-		
 		return PaymentUtil.hmacSign(sValue.toString(), keyValue);
 	}
-	
 	/**
 	 * 返回校验hmac方法
 	 * 
@@ -111,7 +108,6 @@ public class PaymentUtil {
 		String sNewString = PaymentUtil.hmacSign(sValue.toString(), keyValue);
 		return sNewString.equals(hmac);
 	}
-	
 	/**
 	 * @param aValue
 	 * @param aKey
@@ -129,19 +125,16 @@ public class PaymentUtil {
 			keyb = aKey.getBytes();
 			value = aValue.getBytes();
 		}
-
 		Arrays.fill(k_ipad, keyb.length, 64, (byte) 54);
 		Arrays.fill(k_opad, keyb.length, 64, (byte) 92);
 		for (int i = 0; i < keyb.length; i++) {
 			k_ipad[i] = (byte) (keyb[i] ^ 0x36);
 			k_opad[i] = (byte) (keyb[i] ^ 0x5c);
 		}
-
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
-
 			return null;
 		}
 		md.update(k_ipad);
@@ -153,7 +146,6 @@ public class PaymentUtil {
 		dg = md.digest();
 		return toHex(dg);
 	}
-
 	public static String toHex(byte input[]) {
 		if (input == null)
 			return null;
@@ -164,10 +156,8 @@ public class PaymentUtil {
 				output.append("0");
 			output.append(Integer.toString(current, 16));
 		}
-
 		return output.toString();
 	}
-
 	/**
 	 * 
 	 * @param args
@@ -184,7 +174,6 @@ public class PaymentUtil {
 		}
 		return (hmacSign(str.toString(), key));
 	}
-
 	/**
 	 * @param aValue
 	 * @return
@@ -205,9 +194,7 @@ public class PaymentUtil {
 			return null;
 		}
 		return toHex(md.digest(value));
-
 	}
-	
 //	public static void main(String[] args) {
 //		System.out.println(hmacSign("AnnulCard1000043252120080620160450.0http://localhost/SZXpro/callback.asp杩?4564868265473632445648682654736324511","8UPp0KE8sq73zVP370vko7C39403rtK1YwX40Td6irH216036H27Eb12792t"));
 //	}

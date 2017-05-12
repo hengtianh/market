@@ -12,105 +12,108 @@
 	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/mystyle.css"
 	rel="stylesheet">
-<script type="text/javascript">
-	function uploadevent(status, picUrl) {
-		status += '';
-		switch (status) {
-		case '1':
-			var filename162 = picUrl + '_162.jpg';
-			var filename48 = picUrl + '_48.jpg';
-			var filename20 = picUrl + "_20.jpg";
 
-			document.getElementById('avatar_priview').innerHTML = "头像1 : <img style=\"border-radius:5px;\" src='${pageContext.request.contextPath}/headerimages/"+filename162+"'/> <br/> 头像2: <img style=\"border-radius:5px;\" src='${pageContext.request.contextPath}/headerimages/"+filename48+ "'/><br/> 头像3: <img style=\"border-radius:5px;\" src='${pageContext.request.contextPath}/headerimages/"+filename20+ "'/>";
-
-			break;
-		case '-1':
-			window.location.reload();
-			break;
-		default:
-			window.location.reload();
-		}
-	}
-</script>
+<style type="text/css">
+#tablebg {
+	background: url('${pageContext.request.contextPath}/image/bg3.jpg')
+		no-repeat;
+	height: 640px;
+}
+</style>
 </head>
 <body style="background-color: #232830;">
 	<div class="container" style="background-color: white;">
 		<!-- head页面 -->
 		<jsp:include page="/WEB-INF/jsp/head.jsp"></jsp:include>
-		<div class="row" style="height: 640px;">
-			<div class="col-md-3" style="margin-top: 50px;">
-				<!-- Nav tabs -->
-				<div>
-					<ul class="nav nav-tabs nav-stacked" role="tablist">
-						<li role="presentation" class="active"><a href="#home"
-							aria-controls="home" role="tab" data-toggle="tab">上架商品</a></li>
-						<!-- <li role="presentation"><a href="#profile"
-							aria-controls="profile" role="tab" data-toggle="tab">添加图片</a></li> -->
-					</ul>
-				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="messages"
-				style="margin-top: 50px;">
-				<div class="tab-content col-md-8">
-					<%-- <jsp:include page="/WEB-INF/jsp/p_list.jsp"></jsp:include> --%>
-					<table class="table-hover" width="200px" border="1" cellpadding="0"
-						cellspacing="0">
-						<tr align="center">
-							<form
-								action="${pageContext.request.contextPath}/category/product/addProduct.action"
-								method="post" enctype="multipart/form-data">
-								<input type="hidden" name="userid"
-									value="${sessionScope.user.id}">
-								<div class="form-group">
-									<label for="cateitem">cateitem</label> <select
-										class="form-control" name="cateitem">
-										<c:forEach var="item" items="${requestScope.items}">
-											<option value="${item.id}">${item.itemName}</option>
-										</c:forEach>
-									</select>
-								</div>
-
-								<div class="form-group">
-									<label for="pro_name">pro_name</label> <input name="pro_name"
-										value="" type="text" class="form-control" id="pro_name"
-										placeholder="pro_name">
-								</div>
-
-								<div class="form-group">
-									<label for="pro_desc">pro_desc</label> <input name="pro_desc"
-										value="" type="text" class="form-control" id="pro_desc"
-										placeholder="pro_desc">
-								</div>
-
-								<div class="form-group">
-									<label for="price">price</label> <input name="price" value=""
-										type="text" class="form-control" id="price"
-										placeholder="price">
-								</div>
-
-								<div class="form-group">
-									<label for="file">product image</label> <input type="file"
-										id="file" name="proImg">
-									<p class="help-block">在这里添加商品的图片</p>
-								</div>
-
-								<div class="form-group">
-									<label for="num">num</label> <input name="num" value=""
-										type="number" min="1" class="form-control" id="num"
-										placeholder="num">
-								</div>
-
-								<button type="submit" class="btn btn-primary">添加</button>
-								<div class="form-group">
-									<label for="phone"></label>
-									<!-- <input type="text" class="form-control" id="address" placeholder="address"> -->
-								</div>
-							</form>
-						</tr>
-					</table>
+        <div id="tablebg">
+        <div class="row">
+          <div class="col-md-12">
+              <ol class="breadcrumb">
+                  <li><a href="#">首页</a></li>
+                  <li class="active">上架商品</li>
+              </ol>
+          </div>
+        </div>
+		<div class="row">
+			<div class="col-md-3" style="padding-top: 50px;">
+				<div class="main-left">
+					<div class="main-nav"></div>
 				</div>
 			</div>
 
+			<div class="col-md-6" style="padding-top: 50px;">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">上架商品</div>
+					<div class="panel-body">
+						<table class="table-hover" width="200px" border="1"
+							cellpadding="0" cellspacing="0">
+							<tr align="center">
+								<form
+									action="${pageContext.request.contextPath}/category/product/addProduct.action"
+									method="post" enctype="multipart/form-data">
+									<input type="hidden" name="userid"
+										value="${sessionScope.user.id}">
+									<div class="form-group">
+										<label for="cateitem">所属类别</label> <select
+											class="form-control" name="cateitem">
+											<c:forEach var="item" items="${requestScope.items}">
+												<option value="${item.id}">${item.itemName}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="pro_name">物品名称</label> <input name="pro_name"
+													value="" type="text" class="form-control" id="pro_name"
+													placeholder="pro_name">
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="pro_desc">物品描述</label> <input name="pro_desc"
+													value="" type="text" class="form-control" id="pro_desc"
+													placeholder="pro_desc">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="price">单价</label> <input name="price" value=""
+													type="text" class="form-control" id="price"
+													placeholder="price">
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="num">库存数量</label> <input name="num" value=""
+													type="number" min="1" class="form-control" id="num"
+													placeholder="num">
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="file">物品图片</label><p class="help-block">在这里添加商品的图片</p> <input type="file" id="file"
+											name="proImg">
+										
+									</div>
+
+									<button type="submit" class="btn btn-primary">添加</button>
+									<div class="form-group">
+										<label for="phone"></label>
+										<!-- <input type="text" class="form-control" id="address" placeholder="address"> -->
+									</div>
+								</form>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
 		</div>
 	</div>
 	<!-- foot页面 -->
@@ -118,5 +121,14 @@
 
 	<script src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/validate.js"></script>
+	<script src="${pageContext.request.contextPath}/js/category.js"></script>
+	<script>
+		function showNav(value) {
+			var index = value + 1;
+			var div = document.getElementById('nav' + index);
+			$(div).toggle('blind');
+		}
+	</script>
 </body>
 </html>

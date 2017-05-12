@@ -12,6 +12,13 @@
 	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/mystyle.css"
 	rel="stylesheet">
+	<style type="text/css">
+#tablebg {
+    background: url('${pageContext.request.contextPath}/image/bg3.jpg')
+        no-repeat;
+    height: 640px;
+}
+</style>
 <script type="text/javascript">
 	
 </script>
@@ -20,6 +27,15 @@
 	<div class="container" style="background-color: white;">
 		<!-- head页面 -->
 		<jsp:include page="/WEB-INF/jsp/manager/head.jsp"></jsp:include>
+		<div id="tablebg">
+		<div class="row">
+          <div class="col-md-12">
+              <ol class="breadcrumb">
+                  <li><a href="#">首页</a></li>
+                  <li class="active">上架商品</li>
+              </ol>
+          </div>
+        </div>
 		<div class="row" style="height: 640px;">
 			<div class="col-md-3" style="margin-top: 50px;">
 				<!-- Nav tabs -->
@@ -42,19 +58,23 @@
 								method="post">
 
 								<div class="form-group">
-									<label for="pro_name">类别id</label> <input name="cate_id"
-										value="" type="text" class="form-control" id="cate_id"
-										placeholder="cate_id">
+									<label for="pro_name">子类别id</label><select
+                                            class="form-control" name="category">
+                                            <c:forEach var="c" items="${category}">
+                                                <option value="${c.cate_id}">${c.cate_name}</option>
+                                            </c:forEach>
+                                        </select>
 								</div>
 
 								<div class="form-group">
-									<label for="pro_desc">类别名称</label> <input name="cate_name"
-										value="" type="text" class="form-control" id="cate_name"
-										placeholder="cate_name">
+									<label for="pro_desc">子类别名称</label>
+									 <input name="itemName"
+                                        value="" type="text" class="form-control" id="cate_id"
+                                        placeholder="itemName">
 								</div>
 								
 								<div class="form-group">
-									<label for="cate_desc">类别描述</label> <input name="cate_desc"
+									<label for="cate_desc">类别描述</label> <input name=""
 										value="" type="text" class="form-control" id="cate_desc"
 										placeholder="cate_desc">
 								</div>
@@ -70,6 +90,7 @@
 			</div>
 
 		</div>
+	</div>
 	</div>
 	<!-- foot页面 -->
 	<jsp:include page="/WEB-INF/jsp/foot.jsp"></jsp:include>

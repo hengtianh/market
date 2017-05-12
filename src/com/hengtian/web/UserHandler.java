@@ -3,12 +3,10 @@ package com.hengtian.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.hengtian.exceptions.UserException;
 import com.hengtian.po.User;
 import com.hengtian.service.UserService;
@@ -45,8 +43,10 @@ public class UserHandler {
 		}
 		return "redirect:/category/toIndex.action";
 	}
-	
-	
+	@RequestMapping("/toRegister")
+	public String toRegister() throws Exception {
+		return "jsp/regist";
+	}
 	/**
 	 * 验证要邮箱是否存在
 	 * @param email 注册的邮箱 
@@ -62,7 +62,6 @@ public class UserHandler {
 			response.getWriter().write("");
 		}
 	}
-	
 	/**
 	 * 用户注册方法
 	 * @param user
@@ -74,7 +73,6 @@ public class UserHandler {
 		model.addAttribute("info", "注册成功！激活邮件已发送，请注意查收！");
 		return "jsp/info";
 	}
-	
 	/**
 	 * 用户修改个人信息方法
 	 * @param user 修改后的实体信息
@@ -88,9 +86,8 @@ public class UserHandler {
 		session.removeAttribute("user");
 		//重新设置session
 		session.setAttribute("user", user);
-		return "redirect:category/toIndex.action";
+		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 激活注册账户
 	 * @param email 注册的email地址
@@ -99,9 +96,8 @@ public class UserHandler {
 	@RequestMapping("/active")
 	public String activeAccount(String email) throws Exception {
 		uService.updateUserActived(email);
-		return "jsp/index";
+		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 退出登录
 	 * @param session域对象
@@ -114,7 +110,6 @@ public class UserHandler {
 		}
 		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 发送邮件方法
 	 * @param email 发送地址
@@ -131,18 +126,16 @@ public class UserHandler {
 			model.addAttribute("message", "邮件发送失败，请重试");
 			throw ex;
 		}
-		return "redirect:category/toIndex.action";
+		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 转向主页
 	 * @return
 	 */
 	@RequestMapping("/home")
 	public String toHome() {
-		return "redirect:category/toIndex.action";
+		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 转向个人设置页
 	 * @return

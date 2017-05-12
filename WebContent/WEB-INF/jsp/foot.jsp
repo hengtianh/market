@@ -1,4 +1,4 @@
-﻿<div class="container-fluid" style="width:1170px;height:90px;background-color:gray;">
+﻿<div class="container" style="width:1170px;height:90px;background-color:gray;">
 	<p class="foot_p">&copy tianh.maker.com版权所有</p>
 	<ul class="nav nav-pills  foot_a">
 		<li role="presentation" class=""><a href="#">网站信息</a></li>

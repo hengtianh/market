@@ -1,12 +1,12 @@
 package com.hengtian.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.hengtian.exceptions.UserException;
 import com.hengtian.mapper.UserMapper;
 import com.hengtian.po.Admin;
 import com.hengtian.po.User;
 import com.hengtian.service.UserService;
+import com.hengtian.utils.MD5keyBean;
 import com.hengtian.utils.MailUtil;
 
 public class UserServiceImpl implements UserService {
@@ -16,10 +16,9 @@ public class UserServiceImpl implements UserService {
 	public void setMailUtil(MailUtil mailUtil) {
 		this.mailUtil = mailUtil;
 	}
-
+	
 	@Autowired
 	private UserMapper userMapper;
-
 	/**
 	 * 登录时查找用户是否存在,是否激活
 	 * @param 封装有用户名和密码的User对象
@@ -28,6 +27,8 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User findUserToLogin(User user,Integer checkme) throws Exception {
+		String password = new MD5keyBean().getkeyBeanofStr(user.getPwd());
+		user.setPwd(password);
 		User u = userMapper.findUserToLogin(user);
 		if(u==null) {
 			//用户名或密码错误
@@ -38,7 +39,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return u;
 	}
-
 	/**
 	 * 注册用户插入注册对象,发送激活邮件
 	 * @param 注册的对象
@@ -48,6 +48,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertUser(User user) throws Exception {
 		//插入注册的用户
+		String password = new MD5keyBean().getkeyBeanofStr(user.getPwd());
+		user.setPwd(password);
 		userMapper.insertUser(user);
 		try{
 			//发送激活邮件
@@ -57,7 +59,6 @@ public class UserServiceImpl implements UserService {
 			throw(new Exception("服务器网络故障，邮件未正常发送"));
 		}
 	}
-
 	/**
 	 * 激活用户邮箱
 	 * @param 要激活的邮箱
@@ -68,7 +69,6 @@ public class UserServiceImpl implements UserService {
 		userMapper.updateUserActived(email);
 		return true;
 	}
-
 	/**
 	 * @param user更新的对象
 	 * @return void
@@ -77,7 +77,6 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(User user) throws Exception {
 		userMapper.updateUser(user);
 	}
-
 	/**
 	 * 查找email是否存在
 	 * @param email地址
@@ -87,8 +86,6 @@ public class UserServiceImpl implements UserService {
 	public String ifUserExist(String email) throws Exception {
 		return userMapper.findUserByEmail(email);
 	}
-
-
 	@Override
 	public boolean adminLogin(String username, String password) throws Exception {
 		/**
@@ -102,5 +99,4 @@ public class UserServiceImpl implements UserService {
 		}
 		return r;
 	}
-
 }

@@ -1,7 +1,6 @@
 package com.hengtian.utils;
 
 import javax.mail.internet.MimeMessage;
-
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,9 +14,6 @@ public class MailUtil {
     }
 
 	public void sendMail(String email, String realName) throws Exception {
-        // Do the business calculations...
-        // Call the collaborators to persist the order...
-        // Create a thread safe "copy" of the template message and customize it
         MimeMessage msg = mailSender.createMimeMessage();
         helper = new MimeMessageHelper(msg,true,"utf-8");
         String message = "Ç×°®µÄ " + realName

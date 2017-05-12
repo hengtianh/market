@@ -5,16 +5,13 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.hengtian.po.Cart;
 import com.hengtian.po.CartItem;
 import com.hengtian.po.Order;
@@ -43,7 +40,6 @@ public class OrderHandler {
 			e.printStackTrace();
 		}
 	}
-	
 	@Autowired
 	private OrderService oService;
 	/**
@@ -87,7 +83,6 @@ public class OrderHandler {
 		session.setAttribute("cart", cart);
 		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 移除购物项
 	 * @param session
@@ -102,7 +97,6 @@ public class OrderHandler {
 		session.setAttribute("cart", cart);			
 		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 清空购物车
 	 * @param session
@@ -115,7 +109,6 @@ public class OrderHandler {
 		cart.getCartItems().clear();
 		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * 结算，生成订单
 	 * @param session
@@ -134,7 +127,6 @@ public class OrderHandler {
 		//要修改为转向支付页面
 		return "redirect:/order/toPay.action?orderid=" + orderid;
 	}
-	
 	/**
 	 * @author tianheng
 	 * @description 查询要发货的订单
@@ -150,14 +142,12 @@ public class OrderHandler {
 		model.addAttribute("ods", ods);
 		return "jsp/sel/unfinishOrder";
 	}
-	
 	@RequestMapping("/finishOrderDetail")
-	public String finishOrderDetail(int id) throws Exception {
+	public String finishOrderDetail(int id,int num, String pid) throws Exception {
 		//修改订单状态为已发货
-		oService.updateOrder(id);
+		oService.updateOrder(id,num,pid);
 		return "redirect:/category/toIndex.action";
 	}
-	
 	/**
 	 * @author tianheng
 	 * @description 我的宝贝列表
@@ -173,7 +163,6 @@ public class OrderHandler {
 		model.addAttribute("mods", ods);
 		return "jsp/sel/mythings";
 	}
-	
 	/**
 	 * @author tianheng
 	 * @description 修改订单状态为已完成
@@ -201,7 +190,6 @@ public class OrderHandler {
 		model.addAttribute("sodl", ods);
 		return "jsp/sel/successOrderList";
 	}
-	
 	/**
 	 * @author tianheng
 	 * @description 修改状态为已收货
@@ -210,22 +198,18 @@ public class OrderHandler {
 	 * @return TODO
 	 */
 	@RequestMapping("/endOrderDetail")
-	public String endOrderDetail(int id) throws Exception {
-		oService.endOrderDetail(id);
+	public String endOrderDetail(int id, String oid) throws Exception {
+		oService.endOrderDetail(id,oid);
 		return "redirect:/category/toIndex.action";
 	}
-	
 	@RequestMapping("/toPay")
 	public String toPay(String orderid, Model model) throws Exception{
 		OrderItemVO list = oService.findAllOrderItems(orderid);
 		model.addAttribute("ods", list);
 		return "jsp/sel/toPay";
 	}
-	
-	
 	@RequestMapping("/pay")
 	public String pay(HttpServletRequest request, String ordersnum, String price, String pd_FrpId) throws Exception{
-		
 		PayVO pay = new PayVO(ordersnum, price,p1_MerId,responseURL);
 		String hmac = PaymentUtil.buildHmac(pay.getP0_Cmd(), 
 				pay.getP1_MerId(), pay.getP2_Order(), pay.getP3_Amt(), pay.getP4_Cur(), pay.getP5_Pid(),
@@ -236,7 +220,6 @@ public class OrderHandler {
 		fillData(request,pay,pd_FrpId);
 		return "jsp/sel/sure";
 	}
-	
 	public void fillData(HttpServletRequest request, PayVO pay, String pd_FrpId){
 		request.setAttribute("p0_Cmd",pay.getP0_Cmd());
 		request.setAttribute("p1_MerId",pay.getP1_MerId() );
@@ -253,7 +236,6 @@ public class OrderHandler {
 		request.setAttribute("pd_FrpId",pd_FrpId);
 		request.setAttribute("hmac",pay.getHmac());
 	}
-	
 	@RequestMapping("/payResponse")
 	public void payResponse(HttpServletRequest request, HttpServletResponse response) throws Exception{
 			String p1_MerId = request.getParameter("p1_MerId");
@@ -282,7 +264,7 @@ public class OrderHandler {
 						response.getWriter().write("没有该订单");
 						return;
 					}
-					oService.updateOrderStatus(r6_Order);
+					oService.afterPay(r6_Order);
 					response.getWriter().write("<script type='text/javascript'>alert('支付成功')</script>");
 					response.setHeader("Refresh", "0;URL="+request.getContextPath());
 				}else{
@@ -292,5 +274,4 @@ public class OrderHandler {
 				response.getWriter().write("返回的信息有误,请与网站联系");
 			}
 	}
-	
 }

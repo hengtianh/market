@@ -34,7 +34,6 @@ public class PageResult implements Serializable {
 				for (int i=0; i < pages.length; i++){
 					pages[i] = pageIndex + i;
 				}
-				
 			} else if (pageIndex == pageCount){
 				//当前页为最后一页
 				for (int i=0; i < pages.length; i++){
@@ -69,20 +68,15 @@ public class PageResult implements Serializable {
 			}
 		}
 	}
-
-
 	public Integer getType() {
 		return type;
 	}
-
 	public void setType(Integer type) {
 		this.type = type;
 	}
-
 	public int[] getPages() {
 		return this.pages;
 	}
-	
 	public int getPageIndex() {
 		return pageIndex;
 	}
@@ -107,21 +101,16 @@ public class PageResult implements Serializable {
 	public int getStart() {
 		return start;
 	}
-
 	public int getEnd() {
 		return endPage;
 	}
-
 	public void setEnd(int endPage) {
 		this.endPage = endPage;
 	}
-
 	public int getSize() {
 		return size;
 	}
-
 	public void setSize(int size) {
 		this.size = size;
 	}
-	
 }

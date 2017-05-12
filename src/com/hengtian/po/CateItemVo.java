@@ -21,6 +21,4 @@ public class CateItemVo implements Serializable{
 	public void setCateItems(List<CateItem> cateItems) {
 		this.cateItems = cateItems;
 	}
-	
-	
 }

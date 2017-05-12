@@ -9,7 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 	<title>Bootstrap 101 Template</title>
-
 	<!-- Bootstrap -->
 	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet">
@@ -20,17 +19,33 @@
 	<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<style type="text/css">
+#tablebg {
+    background: url('${pageContext.request.contextPath}/image/bg3.jpg')
+        no-repeat;
+    height: 640px;
+}
+</style>
 </head>
 <body style="background-color:#232830;">
 
 <div class="container" style="background-color:white;">
 <!-- head页面 -->
 <jsp:include page="/WEB-INF/jsp/head.jsp"></jsp:include>
+<div id="tablebg">
+<div class="row">
+          <div class="col-md-12">
+              <ol class="breadcrumb">
+                  <li><a href="#">首页</a></li>
+                  <li class="active">个人设置</li>
+              </ol>
+          </div>
+        </div>
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-default">
 		 	<div class="panel-body">
-		    	个人设置
+		    	修改个人设置
 		  	</div>
 			</div>
 			<form action="${pageContext.request.contextPath}/users/modifySetting.action" method="post">
@@ -85,11 +100,10 @@
 		</div>
 	</div>
 </div>
+</div>
 
 <!-- foot页面 -->
 <jsp:include page="/WEB-INF/jsp/foot.jsp"></jsp:include>
-
-
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>

@@ -25,5 +25,4 @@ public class CateItem implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 }

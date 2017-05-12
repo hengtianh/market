@@ -67,5 +67,4 @@ public class Product implements Serializable {
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-
 }

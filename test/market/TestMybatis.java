@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hengtian.dao.UserDao;
 import com.hengtian.mapper.UserMapper;
 import com.hengtian.po.User;
 
@@ -27,12 +26,12 @@ public class TestMybatis {
 	
 	@Test
 	public void testFindUser(){
-		UserDao uDao = (UserDao) context.getBean("userDao");
+		//UserDao uDao = (UserDao) context.getBean("userDao");
 		User u = new User();
 		u.setEmail("123@qq.com");
 		u.setPwd("123");
-		User user = uDao.findUserToLogin(u);
-		System.out.println(user.getRealName());
+		//User user = uDao.findUserToLogin(u);
+		//System.out.println(user.getRealName());
 		
 	}
 	

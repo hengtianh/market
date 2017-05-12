@@ -3,9 +3,12 @@ package com.hengtian.po;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class Cart {
 	private Set<CartItem> cartItems = new HashSet<CartItem>(0);
+	@NumberFormat(style=Style.CURRENCY)
 	private double price;
 	public Set<CartItem> getCartItems() {
 		return cartItems;
